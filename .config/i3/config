@@ -120,7 +120,7 @@ set $w3 "3 "
 set $w4 "4 "
 
 assign[class="Firefox"] $w2
-assign[class="Claws-mail"] $w3
+assign[class="Thunderbird"] $w3
 
 # switch to workspace
 bindsym $mod+1 workspace $w1
@@ -229,5 +229,8 @@ bindsym $mod+u exec --no-startup-id ~/.config/i3/scripts/lock.sh
 # notification
 exec --no-startup-id dunst
 
+# warm screen colors the darker it gets
+exec --no-startup-id redshift
+
 # launch this apps on startup
-exec --no-startup-id claws-mail
+exec --no-startup-id thunderbird
