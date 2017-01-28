@@ -3,6 +3,9 @@ alias vim "nvim"
 alias gm "git commit -m "
 alias gs "git status"
 alias ga "git add "
+alias reboot "systemctl reboot"
+alias shutdown "systemctl halt"
+alias suspend "systemctl suspend"
 
 # double-bang (like in bash)
 function bind_bang
