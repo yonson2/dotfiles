@@ -116,10 +116,11 @@ bindsym $mod+a focus parent
 
 set $w1 "1 "
 set $w2 "2 "
-set $w3 "3 "
+set $w3 "3 "
 set $w4 "4 "
 
 assign[class="Firefox"] $w2
+assign[class="Claws-mail"] $w3
 
 # switch to workspace
 bindsym $mod+1 workspace $w1
@@ -224,3 +225,9 @@ exec_always --no-startup-id feh --bg-max ~/Pictures/wall.png
 
 # lockscreen
 bindsym $mod+u exec --no-startup-id ~/.config/i3/scripts/lock.sh
+
+# notification
+exec --no-startup-id dunst
+
+# launch this apps on startup
+exec --no-startup-id claws-mail
