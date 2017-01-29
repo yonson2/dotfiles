@@ -206,9 +206,9 @@ bindsym XF86AudioLowerVolume exec "amixer -q sset Master,0 2- unmute"
 bindsym XF86AudioMute exec "amixer -q sset Master,0 toggle"
 
 # Sreen brightness controls
-bindsym XF86MonBrightnessUp exec xbacklight -inc 5 # increase screen brightness
-bindsym XF86MonBrightnessDown exec xbacklight -dec 5 # decrease screen brightness
-bindsym $mod+grave exec xbacklight -set 1 # Set to minimum
+bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 5 # increase screen brightness
+bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 5 # decrease screen brightness
+bindsym $mod+grave exec --no-startup-id xbacklight -set 1 # Set to minimum
 
 # Media player controls
 bindsym XF86AudioPlay exec playerctl play
