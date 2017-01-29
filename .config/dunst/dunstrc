@@ -1,5 +1,5 @@
 [global]
-    font = "System San Francisco Display 36"
+    font = "System San Francisco Display 20"
     allow_markup = yes
     format = "<b>%s</b>\n%b"
     sort = yes
@@ -9,7 +9,7 @@
     show_age_threshold = 60
     word_wrap = yes
     ignore_newline = no
-    geometry = "550-6+30"
+    geometry = "600-6+30"
     transparency = 0
     idle_threshold = 10
     monitor = 0

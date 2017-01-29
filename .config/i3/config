@@ -183,7 +183,7 @@ bindsym $mod+r mode "resize"
 # finds out, if available)
 
 bar {
-  font pango: System San Francisco Display Light, FontAwesome 10
+  font pango: System San Francisco Display Light, FontAwesome 8
         status_command i3blocks -c ~/.config/i3/i3blocks.conf
   # height 25
   separator_symbol "  "
@@ -233,4 +233,4 @@ exec --no-startup-id dunst
 exec --no-startup-id redshift
 
 # launch this apps on startup
-exec --no-startup-id thunderbird
+#exec --no-startup-id thunderbird
