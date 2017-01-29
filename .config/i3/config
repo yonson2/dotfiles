@@ -217,7 +217,9 @@ bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 
 #printscreen
-bindsym Print exec scrot -q 100 '%Y-%m-%d-%s_$wx$h_scrot.png' -e 'mv $f ~/screenshots/'
+bindsym Print exec --no-startup-id scrot -q 100 '%Y-%m-%d-%s_$wx$h_scrot.jpg' -e 'mv $f ~/screenshots/'
+
+# transparency
 exec --no-startup-id compton -f
 
 # Wall
