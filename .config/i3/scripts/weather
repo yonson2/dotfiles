@@ -1,5 +1,7 @@
 #!/bin/bash
 # Based on http://openweathermap.org/current
+# Sleep to avoid trying to ping owm host without a connection
+sleep 60
 
 API_KEY="b9fa7e517027c5ff78443f4825438997"
 

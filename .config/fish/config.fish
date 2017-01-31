@@ -5,7 +5,7 @@ alias gs "git status"
 alias ga "git add "
 alias gp "git push "
 #alias reb "systemctl reboot"
-#alias bye "systemctl halt"
+alias bye "sudo shutdown now"
 #alias sus "systemctl suspend"
 
 # double-bang (like in bash)
