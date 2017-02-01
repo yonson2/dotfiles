@@ -223,7 +223,8 @@ bindsym Print exec --no-startup-id scrot -q 100 '%Y-%m-%d-%s_$wx$h_scrot.jpg' -e
 exec --no-startup-id compton -f
 
 # Wall
-exec_always --no-startup-id feh --bg-max ~/Pictures/wall.png
+# exec_always --no-startup-id feh --bg-max ~/Pictures/wall.png
+exec_always --no-startup-id node ~/.config/i3/scripts/wall.js
 
 # lockscreen
 bindsym $mod+u exec --no-startup-id ~/.config/i3/scripts/lock.sh
@@ -237,7 +238,11 @@ exec --no-startup-id dunst
 # launch this apps on startup
 #exec --no-startup-id thunderbird
 
-#No border apps
-for_window [class="Firefox"] border none
-for_window [class="qterminal"] border none
-for_window [class="Thunderbird"] border none
+#hide title bars by default
+new_window pixel 1
+#for_window [class="Firefox"] border none
+#for_window [class="qterminal"] border none
+#for_window [class="Thunderbird"] border none
+
+# change resolution to 1440p, also need to tweak fonts accordingly
+#exec --no-startup-id ~/.screenlayout/1440p.sh
