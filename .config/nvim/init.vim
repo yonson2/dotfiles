@@ -29,7 +29,7 @@ endif
 syntax enable
 set background=dark
 let g:neodark#background='black'
-colorscheme neodark
+colorscheme onedark
 " let g:seoul256_background = 234 " Just for seoul256.
 " let g:neodark#background='gray'
 let g:airline_theme= 'onedark' " zenburn is pretty good with gruvbox
