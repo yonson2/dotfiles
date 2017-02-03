@@ -6,17 +6,13 @@ if empty(glob('~/.config/nvim/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.config/nvim/plugged')
-Plug 'morhetz/gruvbox' " Syntax theme. colorscheme gruvbox
 Plug 'joshdick/onedark.vim' " Syntax theme inspired by atom's one dark, with airline support. colorscheme onedark
-" Plug 'whatyouhide/vim-gotham' " Darker syntax theme, with airline support. colorscheme gotham
-" Plug 'junegunn/seoul256.vim' " Low contrast theme. colorscheme seoul256.
-Plug 'KeitaNakamura/neodark.vim' " Inspired by onedark, let g:neodark#background=black|gray|brown before colorscheme neodark
 Plug 'ctrlpvim/ctrlp.vim' " Fuzzy finder.
 Plug 'vim-airline/vim-airline' " Status bar
-Plug 'vim-airline/vim-airline-themes'
 Plug 'sheerun/vim-polyglot' " Syntax highlightning for multiple languages
 Plug 'neomake/neomake' "Async linter
-Plug 'numkil/ag.nvim' " Needs ag (the_silver_searcher) to be installed on system :S
+" Plug 'numkil/ag.nvim' " Needs ag (the_silver_searcher) to be installed on system :S
+Plug 'jremmen/vim-ripgrep' " Like ag but with ripgrep
 Plug 'jiangmiao/auto-pairs' " Inserts matching pairs, probably only useful for coding
 call plug#end()
 
@@ -26,12 +22,15 @@ if (has("termguicolors"))
 endif
 
 " Theme
+" Previously used colorschemes
+" Plug 'morhetz/gruvbox' " Syntax theme. colorscheme gruvbox
+" Plug 'whatyouhide/vim-gotham' " Darker syntax theme, with airline support. colorscheme gotham
+" Plug 'junegunn/seoul256.vim' " Low contrast theme. colorscheme seoul256.
+" Plug 'KeitaNakamura/neodark.vim' " Inspired by onedark, let g:neodark#background=black|gray|brown before colorscheme neodark
+" Plug 'vim-airline/vim-airline-themes'
 syntax enable
 set background=dark
-let g:neodark#background='black'
 colorscheme onedark
-" let g:seoul256_background = 234 " Just for seoul256.
-" let g:neodark#background='gray'
 let g:airline_theme= 'onedark' " zenburn is pretty good with gruvbox
 
 set showcmd             " Show (partial) command in status line.
@@ -48,19 +47,17 @@ set nojoinspaces        " Prevents inserting two spaces after punctuation on a j
 set relativenumber      " Relative numbers
 set hidden              " Hidden buffers are still loaded into memory.
 
-" Make CtrlP fast https://github.com/kien/ctrlp.vim/issues/174#issuecomment-218866242
-" Temporarily commenting this line as I'm not sure it improves performance on
-" my machine
-" if executable('ag')
-  " Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
-  " set grepprg=ag\ --nogroup\ --nocolor
-  " Use ag in CtrlP for listing files. Lightning fast, respects .gitignore
-  " and .agignore. Ignores hidden files by default.
-  " let g:ctrlp_user_command = 'ag %s -l --nocolor -f -g ""'
-" else
-  "ctrl+p ignore files in .gitignore
-let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
-" endif
+" Make CtrlP fast https://github.com/kien/ctrlp.vim/issues/174
+set wildignore+=*/.git/*,*/tmp/*,*.swp
+" let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
+
+" Needs ripgrep
+if executable('rg')
+  set grepprg=rg
+  let g:ctrlp_user_command = ['.git', 'cd %s && rg --files-with-matches ".*"', 'find %s -type f']
+  " let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
+  let g:ctrlp_use_caching = 0
+endif
 
 " Map the leader key to SPACE
 let mapleader="\<SPACE>"
@@ -81,7 +78,7 @@ nnoremap <Leader><Tab> :bn<CR>
 " Go to previous buffer
 nnoremap <Leader><S-Tab> :bp<CR>
 " Kill buffer without closing split
-nnoremap <Leader>k :bp\|bd #<CR>
+nnoremap <Leader>d :bp\|bd #<CR>
 " Jump between neomake errors
 " Go to current error.
 nnoremap <Leader><Leader> :ll<CR>
@@ -95,6 +92,11 @@ nnoremap <Leader>t :noh<CR>
 tnoremap <Esc> <C-\><C-n>
 " Select contents of a whole file
 nnoremap <Leader>a ggVG
+" Move lines around easily
+nnoremap <leader>k :m-2<cr>==
+nnoremap <leader>j :m+<cr>==
+xnoremap <leader>k :m-2<cr>gv=gv
+xnoremap <leader>j :m'>+<cr>gv=gv
 
 " More natural splits
 set splitbelow          " Horizontal split below current.
@@ -130,17 +132,33 @@ nmap N Nzz
 let g:ag_working_path_mode="r" " Start searching from project root.
 
 " Airline
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+
 let g:airline#extensions#tabline#enabled = 2
 let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline#extensions#tabline#right_sep = ' '
 let g:airline#extensions#tabline#right_alt_sep = '|'
-let g:airline_left_sep = ' '
-let g:airline_left_alt_sep = '|'
-let g:airline_right_sep = ' '
-let g:airline_right_alt_sep = '|'
-" http://nerditya.com/code/guide-to-neovim/
+
+" unicode symbols
+let g:airline_symbols.crypt = '🔒'
+let g:airline_symbols.maxlinenr = ''
+let g:airline_symbols.paste = '∥'
+let g:airline_symbols.spell = 'Ꞩ'
+let g:airline_symbols.notexists = '∄'
+let g:airline_symbols.whitespace = 'Ξ'
+
+" powerline symbols
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = ''
 
 " Run neomake on every write
 autocmd! BufWritePost * Neomake
