@@ -14,6 +14,8 @@ Plug 'neomake/neomake' "Async linter
 " Plug 'numkil/ag.nvim' " Needs ag (the_silver_searcher) to be installed on system :S
 Plug 'jremmen/vim-ripgrep' " Like ag but with ripgrep
 Plug 'jiangmiao/auto-pairs' " Inserts matching pairs, probably only useful for coding
+Plug 'nathanaelkane/vim-indent-guides' " Indentation visual guides
+Plug 'tpope/vim-commentary' " add/remove comments, gcc for line, gc<motion>
 call plug#end()
 
 " Or if you have Neovim >= 0.1.5
@@ -46,6 +48,8 @@ set shiftwidth=2        " Indentation amount for < and > commands.
 set nojoinspaces        " Prevents inserting two spaces after punctuation on a join (J)
 set relativenumber      " Relative numbers
 set hidden              " Hidden buffers are still loaded into memory.
+set autoread            " Auto reload changed files
+set showbreak=↪         " Display character indicating new line
 
 " Make CtrlP fast https://github.com/kien/ctrlp.vim/issues/174
 set wildignore+=*/.git/*,*/tmp/*,*.swp
