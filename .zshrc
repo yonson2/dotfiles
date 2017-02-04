@@ -8,9 +8,11 @@ if ! zgen saved; then
   # specify plugins here
   zgen prezto
   zgen prezto git
-  zgen prezto syntax-highlighting
+  zgen load zsh-users/zsh-syntax-highlighting
+  zgen load zsh-users/zsh-autosuggestions
 
   # generate the init script from plugins above
   zgen save
 fi
 alias vim=nvim
+alias dotfiles='git --git-dir=.dotfiles.git'
