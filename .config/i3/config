@@ -183,7 +183,7 @@ bindsym $mod+r mode "resize"
 # finds out, if available)
 
 bar {
-  font pango: SFNS Display, FontAwesome 9
+  font pango: Fira Code, FontAwesome 9
         status_command i3blocks -c ~/.config/i3/i3blocks.conf
   # height 25
   separator_symbol "  "
