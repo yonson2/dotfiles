@@ -1,11 +1,11 @@
 " auto-install vim-plug
 "
-if empty(glob('~/.config/nvim/autoload/plug.vim'))
-  silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall
 endif
 
-call plug#begin('~/.config/nvim/plugged')
+call plug#begin('~/.vim/plugged')
 Plug 'joshdick/onedark.vim' " Syntax theme inspired by atom's one dark, with airline support. colorscheme onedark
 Plug 'ctrlpvim/ctrlp.vim' " Fuzzy finder.
 Plug 'vim-airline/vim-airline' " Status bar
@@ -18,11 +18,6 @@ Plug 'nathanaelkane/vim-indent-guides' " Indentation visual guides
 Plug 'tpope/vim-commentary' " add/remove comments, gcc for line, gc<motion>
 Plug 'w0rp/ale' " Linting
 call plug#end()
-
-" Or if you have Neovim >= 0.1.5
-if (has("termguicolors"))
-  set termguicolors
-endif
 
 " Theme
 " Previously used colorschemes
@@ -94,7 +89,7 @@ nnoremap <Leader>p :lprev<CR>
 " Toggle highlights
 nnoremap <Leader>t :noh<CR>
 " Map <Esc> to exit terminal mode
-tnoremap <Esc> <C-\><C-n>
+nnoremap <Esc> <C-\><C-n>
 " Select contents of a whole file
 nnoremap <Leader>a ggVG
 " Move lines around easily

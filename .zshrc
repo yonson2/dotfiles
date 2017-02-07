@@ -14,5 +14,5 @@ if ! zgen saved; then
   # generate the init script from plugins above
   zgen save
 fi
-alias vim=nvim
+# alias vim=nvim
 alias dotfiles='git --git-dir=.dotfiles.git'
