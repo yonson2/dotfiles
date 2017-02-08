@@ -10,8 +10,6 @@ Plug 'joshdick/onedark.vim' " Syntax theme inspired by atom's one dark, with air
 Plug 'ctrlpvim/ctrlp.vim' " Fuzzy finder.
 Plug 'vim-airline/vim-airline' " Status bar
 Plug 'sheerun/vim-polyglot' " Syntax highlightning for multiple languages
-" Plug 'neomake/neomake' "Async linter
-" Plug 'numkil/ag.nvim' " Needs ag (the_silver_searcher) to be installed on system :S
 Plug 'jremmen/vim-ripgrep' " Like ag but with ripgrep
 Plug 'jiangmiao/auto-pairs' " Inserts matching pairs, probably only useful for coding
 Plug 'nathanaelkane/vim-indent-guides' " Indentation visual guides
@@ -25,12 +23,6 @@ if (has("termguicolors"))
 endif
 
 " Theme
-" Previously used colorschemes
-" Plug 'morhetz/gruvbox' " Syntax theme. colorscheme gruvbox
-" Plug 'whatyouhide/vim-gotham' " Darker syntax theme, with airline support. colorscheme gotham
-" Plug 'junegunn/seoul256.vim' " Low contrast theme. colorscheme seoul256.
-" Plug 'KeitaNakamura/neodark.vim' " Inspired by onedark, let g:neodark#background=black|gray|brown before colorscheme neodark
-" Plug 'vim-airline/vim-airline-themes'
 syntax enable
 set background=dark
 colorscheme onedark
@@ -165,15 +157,20 @@ let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = ''
 
-" Run neomake on every write
-" autocmd! BufWritePost * Neomake
+let g:airline_powerline_fonts = 1 " Use powerline fonts
+let g:airline_section_error = '%{ALEGetStatusLine()}' " use ALE statusline errors
 
-" Ale configuration
-let g:ale_sign_error = ''
-let g:ale_sign_warning = ''
-
-let g:ale_lint_on_save = 1
+" Ale settings
+let g:ale_statusline_format    = ['✗ %d', '⚠ %d', '◈ ok']
+let g:ale_echo_msg_format      = '[%linter%] %s [%severity%]'
+let g:ale_lint_on_save         = 1
 let g:ale_lint_on_text_changed = 0
+let g:ale_sign_column_always   = 1
+let g:ale_sign_error           = '✗'
+let g:ale_sign_warning         = '⚠'
+let g:ale_linters              = {
+\   'rust': ['cargo'],
+\}
 
 " javascript
 let g:neomake_javascript_enabled_makers = ['eslint']
