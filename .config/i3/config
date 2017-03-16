@@ -114,20 +114,22 @@ bindsym $mod+a focus parent
 # focus the child container
 #bindsym $mod+d focus child
 
-set $w1 "1 "
-set $w2 "2 "
-set $w3 "3 "
-set $w4 "4 "
+set $w1 "1:"
+set $w2 "2:"
+set $w3 "3:"
+set $w4 "4:"
+set $w5 "5:"
 
 assign[class="Firefox"] $w2
-assign[class="Thunderbird"] $w3
+assign[class="Slack"] $w3
+assign[class="Thunderbird"] $w4
 
 # switch to workspace
 bindsym $mod+1 workspace $w1
 bindsym $mod+2 workspace $w2
 bindsym $mod+3 workspace $w3
 bindsym $mod+4 workspace $w4
-bindsym $mod+5 workspace 5
+bindsym $mod+5 workspace $w5
 bindsym $mod+6 workspace 6
 bindsym $mod+7 workspace 7
 bindsym $mod+8 workspace 8
@@ -187,6 +189,7 @@ bar {
         status_command i3blocks -c ~/.config/i3/i3blocks.conf
   # height 25
   separator_symbol "  "
+  strip_workspace_numbers yes
   colors {
         separator $base03
         background $base01
