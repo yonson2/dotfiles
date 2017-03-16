@@ -16,3 +16,5 @@ if ! zgen saved; then
 fi
 alias vim=nvim
 alias dotfiles='git --git-dir=.dotfiles.git'
+alias tab='qterminal -w $(pwd) &'
+alias stream='mpv --force-seekable=yes'
