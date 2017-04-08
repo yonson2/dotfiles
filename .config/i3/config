@@ -122,6 +122,7 @@ set $w5 "5:"
 
 assign[class="Firefox"] $w2
 assign[class="Slack"] $w3
+assign[class="discord"] $w3
 assign[class="Thunderbird"] $w4
 
 # switch to workspace
@@ -239,10 +240,10 @@ exec --no-startup-id dunst
 #exec --no-startup-id redshift
 
 # launch this apps on startup
-#exec --no-startup-id thunderbird
+exec --no-startup-id /usr/bin/libinput-gestures
 
 #hide title bars by default
-new_window pixel 1
+new_window pixel 0
 #for_window [class="Firefox"] border none
 #for_window [class="qterminal"] border none
 #for_window [class="Thunderbird"] border none

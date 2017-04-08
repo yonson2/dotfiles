@@ -6,7 +6,8 @@ if empty(glob('~/.config/nvim/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.config/nvim/plugged')
-Plug 'joshdick/onedark.vim' " Syntax theme inspired by atom's one dark, with airline support. colorscheme onedark
+Plug 'rakr/vim-one' " Atom theme, dark and light variant
+" Plug 'joshdick/onedark.vim' " Syntax theme inspired by atom's one dark, with airline support. colorscheme onedark
 Plug 'ctrlpvim/ctrlp.vim' " Fuzzy finder.
 Plug 'vim-airline/vim-airline' " Status bar
 Plug 'sheerun/vim-polyglot' " Syntax highlightning for multiple languages
@@ -25,8 +26,8 @@ endif
 " Theme
 syntax enable
 set background=dark
-colorscheme onedark
-let g:airline_theme= 'onedark' " zenburn is pretty good with gruvbox
+colorscheme one
+let g:airline_theme='one' " zenburn is pretty good with gruvbox
 
 set showcmd             " Show (partial) command in status line.
 set showmatch           " Show matching brackets.
@@ -43,6 +44,8 @@ set relativenumber      " Relative numbers
 set hidden              " Hidden buffers are still loaded into memory.
 set autoread            " Auto reload changed files
 set showbreak=↪         " Display character indicating new line
+set wildmenu            " visual autocomplete for command menu
+
 
 " Make CtrlP fast https://github.com/kien/ctrlp.vim/issues/174
 set wildignore+=*/.git/*,*/tmp/*,*.swp
