@@ -7,7 +7,6 @@ endif
 
 call plug#begin('~/.config/nvim/plugged')
 Plug 'rakr/vim-one' " Atom theme, dark and light variant
-" Plug 'joshdick/onedark.vim' " Syntax theme inspired by atom's one dark, with airline support. colorscheme onedark
 Plug 'ctrlpvim/ctrlp.vim' " Fuzzy finder.
 Plug 'vim-airline/vim-airline' " Status bar
 Plug 'sheerun/vim-polyglot' " Syntax highlightning for multiple languages
@@ -45,7 +44,7 @@ set hidden              " Hidden buffers are still loaded into memory.
 set autoread            " Auto reload changed files
 set showbreak=↪         " Display character indicating new line
 set wildmenu            " visual autocomplete for command menu
-
+set colorcolumn=120     " vertical indicator
 
 " Make CtrlP fast https://github.com/kien/ctrlp.vim/issues/174
 set wildignore+=*/.git/*,*/tmp/*,*.swp
