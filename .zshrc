@@ -14,6 +14,7 @@ if ! zgen saved; then
   # generate the init script from plugins above
   zgen save
 fi
+export TERM=xterm-256color
 alias vim=nvim
 alias dotfiles='git --git-dir=.dotfiles.git'
 alias tab='qterminal -w $(pwd) &'

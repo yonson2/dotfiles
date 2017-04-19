@@ -117,6 +117,7 @@ bindsym $mod+a focus parent
 # focus the child container
 #bindsym $mod+d focus child
 
+
 set $w1 "1:"
 set $w2 "2:"
 set $w3 "3:"
@@ -127,6 +128,9 @@ assign[class="Firefox"] $w2
 assign[class="Slack"] $w3
 assign[class="discord"] $w3
 assign[class="Thunderbird"] $w4
+
+# run weechat on $w3
+bindsym $mod+i exec --no-startup-id "i3-msg 'workspace 3:; exec /usr/bin/qterminal -e weechat;'"
 
 # switch to workspace
 bindsym $mod+1 workspace $w1

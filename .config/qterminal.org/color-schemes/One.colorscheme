@@ -1,8 +1,8 @@
 # --- special colors ---
+# --- was 30,33,39 ---
 
 [Background]
-Color=44,50,60 #was 30,33,39
-
+Color=44,50,60
 [BackgroundIntense]
 Color=44,50,60
 
