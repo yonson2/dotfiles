@@ -27,7 +27,9 @@ endif
 syntax enable
 set background=dark
 colorscheme one
-let g:airline_theme='one' " zenburn is pretty good with gruvbox
+call one#highlight('Normal', 'abb2bf', '0f131b', 'none') " change bg color
+
+let g:airline_theme='one'
 
 set showcmd             " Show (partial) command in status line.
 set showmatch           " Show matching brackets.
