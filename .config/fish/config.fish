@@ -1,13 +1,4 @@
 # alias
-alias vim "nvim"
-alias gm "git commit -m "
-alias gs "git status"
-alias ga "git add "
-alias gp "git push "
-#alias reb "systemctl reboot"
-alias bye "sudo shutdown now"
-#alias sus "systemctl suspend"
-
 # double-bang (like in bash)
 function bind_bang
     switch (commandline -t)[-1]

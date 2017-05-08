@@ -15,6 +15,7 @@ Plug 'jiangmiao/auto-pairs' " Inserts matching pairs, probably only useful for c
 Plug 'nathanaelkane/vim-indent-guides' " Indentation visual guides
 Plug 'tpope/vim-commentary' " add/remove comments, gcc for line, gc<motion>
 Plug 'w0rp/ale' " Linting
+Plug 'tpope/vim-surround' " quoting/parenthesizing made simple
 call plug#end()
 
 " Or if you have Neovim >= 0.1.5

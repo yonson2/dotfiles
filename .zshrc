@@ -15,6 +15,7 @@ if ! zgen saved; then
   zgen save
 fi
 export TERM=xterm-256color
+alias ovim=/usr/bin/vim
 alias vim=nvim
 alias dotfiles='git --git-dir=.dotfiles.git'
 alias tab='qterminal -w $(pwd) &'
@@ -31,3 +32,4 @@ pr() {
 }
 alias mr=pr
 alias say='echo "$1" | espeak -v english-us -s 120 2>/dev/null'
+alias gpg4usb='exec /home/peter/Documents/gpg4usb/start_linux_64bit'
