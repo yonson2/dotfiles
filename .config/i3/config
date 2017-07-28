@@ -128,6 +128,7 @@ assign[class="Firefox"] $w2
 assign[class="Slack"] $w3
 assign[class="discord"] $w3
 assign[class="Thunderbird"] $w4
+assign[class="streamlink-twitch-gui"] $w5
 
 # run weechat on $w3
 bindsym $mod+i exec --no-startup-id "i3-msg 'workspace 3:; exec /usr/bin/qterminal -e weechat;'"
@@ -215,9 +216,13 @@ bindsym $mod+m bar mode toggle
 
 
 # Volume controls
-bindsym XF86AudioRaiseVolume exec --no-startup-id "amixer -q sset Master,0 2+ unmute"
-bindsym XF86AudioLowerVolume exec --no-startup-id "amixer -q sset Master,0 2- unmute"
+# ALSA
+# bindsym XF86AudioRaiseVolume exec --no-startup-id "amixer -q sset Master,0 2+ unmute"
+# bindsym XF86AudioLowerVolume exec --no-startup-id "amixer -q sset Master,0 2- unmute"
 bindsym XF86AudioMute exec --no-startup-id "amixer -q sset Master,0 toggle"
+# Pulseaudio
+bindsym XF86AudioRaiseVolume exec --no-startup-id "pactl set-sink-volume 0 +5%"
+bindsym XF86AudioLowerVolume exec --no-startup-id "pactl set-sink-volume 0 -5%"
 
 # Sreen brightness controls
 bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 5 # increase screen brightness
@@ -233,6 +238,11 @@ bindsym XF86AudioPrev exec playerctl previous
 #printscreen
 bindsym Print exec --no-startup-id scrot -q 100 '%Y-%m-%d-%s_$wx$h_scrot.jpg' -e 'mv $f ~/screenshots/'
 
+## Autostart
+
+#Thunar in daemon mode
+exec --no-startup-id thunar --daemon
+
 # transparency
 exec --no-startup-id compton -f
 
@@ -245,6 +255,7 @@ bindsym $mod+u exec --no-startup-id ~/.config/i3/scripts/lock.sh
 
 # notification
 exec --no-startup-id dunst
+# exec --no-startup-id /usr/lib/xfce4/notifyd/xfce4-notifyd
 
 # warm screen colors the darker it gets
 #exec --no-startup-id redshift

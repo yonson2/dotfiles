@@ -4,6 +4,8 @@ alias ovim "usr/bin/vim"
 alias dotfiles "git --git-dir=.dotfiles.git"
 alias stream "mpv --force-seekable=yes"
 alias gpg4usb "exec /home/peter/Documents/gpg4usb/start_linux_64bit"
+alias storelogix "curlftpfs -o utf8 ftp://ftp1.cslogin.de:1112/ ~/zen/storelogix/ftp/; and ranger ~/zen/storelogix/ftp"
+alias unstorelogix "fusermount -u ~/zen/storelogix/ftp"
 
 bind \cr re_search
 # pr() {

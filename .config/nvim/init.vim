@@ -16,6 +16,7 @@ Plug 'nathanaelkane/vim-indent-guides' " Indentation visual guides
 Plug 'tpope/vim-commentary' " add/remove comments, gcc for line, gc<motion>
 Plug 'w0rp/ale' " Linting
 Plug 'tpope/vim-surround' " quoting/parenthesizing made simple
+Plug 'elmcast/elm-vim' " Better elm handling than the one provided by polyglot
 call plug#end()
 
 " Or if you have Neovim >= 0.1.5
@@ -56,9 +57,10 @@ set wildignore+=*/.git/*,*/tmp/*,*.swp
 " Needs ripgrep
 if executable('rg')
   set grepprg=rg
-  let g:ctrlp_user_command = ['.git', 'cd %s && rg --files-with-matches ".*"', 'find %s -type f']
-  " let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
+  " let g:ctrlp_user_command = ['.git', 'cd %s && rg --files-with-matches ".*"', 'find %s -type f']
+  let g:ctrlp_user_command = 'rg -i %s --files --color=never --glob ""'
   let g:ctrlp_use_caching = 0
+  let g:rg_command = 'rg -i --vimgrep'
 endif
 
 " Map the leader key to SPACE
@@ -180,5 +182,12 @@ let g:neomake_jsx_enabled_makers = ['eslint']
 let g:neomake_javascript_eslint_exe = system('PATH=$(npm bin):$PATH && which eslint | tr -d "\n"') "Prefer local eslint
 let g:javascript_plugin_jsdoc = 1
 
+" elm
+let g:polyglot_disabled = ['elm']
+let g:elm_setup_keybindings = 0
+
 " Rust
 let g:rustfmt_autosave = 1
+map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<cr>
