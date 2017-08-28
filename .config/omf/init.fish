@@ -6,6 +6,9 @@ alias stream "mpv --force-seekable=yes"
 alias gpg4usb "exec /home/peter/Documents/gpg4usb/start_linux_64bit"
 alias storelogix "curlftpfs -o utf8 ftp://ftp1.cslogin.de:1112/ ~/zen/storelogix/ftp/; and ranger ~/zen/storelogix/ftp"
 alias unstorelogix "fusermount -u ~/zen/storelogix/ftp"
+alias say 'echo "$1" | espeak -v english-us -s 120 2>/dev/null'
+alias e 'emacsclient -nc -s instance1'
+alias vimdiff 'nvim -d'
 
 bind \cr re_search
 # pr() {

@@ -130,6 +130,8 @@ assign[class="discord"] $w3
 assign[class="Thunderbird"] $w4
 assign[class="streamlink-twitch-gui"] $w5
 
+for_window [class="Lazarus"] floating enable
+
 # run weechat on $w3
 bindsym $mod+i exec --no-startup-id "i3-msg 'workspace 3:; exec /usr/bin/qterminal -e weechat;'"
 
@@ -242,6 +244,12 @@ bindsym Print exec --no-startup-id scrot -q 100 '%Y-%m-%d-%s_$wx$h_scrot.jpg' -e
 
 #Thunar in daemon mode
 exec --no-startup-id thunar --daemon
+
+#Emacs in daemon mode
+exec --no-startup-id emacs --daemon=instance1
+
+#f.lux fluxgui xflux-gui-git
+exec --no-startup-id fluxgui
 
 # transparency
 exec --no-startup-id compton -f
