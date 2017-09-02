@@ -10,13 +10,15 @@ Plug 'rakr/vim-one' " Atom theme, dark and light variant
 Plug 'ctrlpvim/ctrlp.vim' " Fuzzy finder.
 Plug 'vim-airline/vim-airline' " Status bar
 Plug 'sheerun/vim-polyglot' " Syntax highlightning for multiple languages
-Plug 'jremmen/vim-ripgrep' " Like ag but with ripgrep
+Plug 'jremmen/vim-ripgrep' " Like ag but with ripgrep. depends on ripgrep
+Plug 'mileszs/ack.vim' " Like ag, and ripgrep. depends on ack
 Plug 'jiangmiao/auto-pairs' " Inserts matching pairs, probably only useful for coding
 Plug 'nathanaelkane/vim-indent-guides' " Indentation visual guides
 Plug 'tpope/vim-commentary' " add/remove comments, gcc for line, gc<motion>
 Plug 'w0rp/ale' " Linting
 Plug 'tpope/vim-surround' " quoting/parenthesizing made simple
 Plug 'elmcast/elm-vim' " Better elm handling than the one provided by polyglot
+Plug 'tpope/vim-repeat' " Enable . repeat for things like vim-surround
 call plug#end()
 
 " Or if you have Neovim >= 0.1.5
