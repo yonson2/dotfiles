@@ -19,6 +19,9 @@ Plug 'w0rp/ale' " Linting
 Plug 'tpope/vim-surround' " quoting/parenthesizing made simple
 Plug 'elmcast/elm-vim' " Better elm handling than the one provided by polyglot
 Plug 'tpope/vim-repeat' " Enable . repeat for things like vim-surround
+Plug 'l04m33/vlime', {'rtp': 'vim/'} " Common Lisp
+Plug 'junegunn/rainbow_parentheses.vim'
+Plug 'kovisoft/paredit' " Common Lisp parenthesis help
 call plug#end()
 
 " Or if you have Neovim >= 0.1.5
@@ -78,7 +81,7 @@ nnoremap <Leader>f :CtrlPMRUFiles<CR>
 " Save current buffers and settings to ~/today.ses // restore with vim -S ~/today.ses
 nnoremap <Leader>s :mksession! ~/.vim_session<CR>
 " Restore session
-nnoremap <Leader>r :source ~/.vim_session<CR>
+nnoremap <Leader>R :source ~/.vim_session<CR>
 " Go to next buffer
 nnoremap <Leader><Tab> :bn<CR>
 " Go to previous buffer
@@ -177,6 +180,8 @@ let g:ale_lint_on_text_changed = 0
 let g:ale_sign_column_always   = 1
 let g:ale_sign_error           = '✗'
 let g:ale_sign_warning         = '⚠'
+let g:ale_fixers = {}
+let g:ale_fixers['javascript'] = ['prettier']
 
 " javascript
 let g:neomake_javascript_enabled_makers = ['eslint']
@@ -190,6 +195,22 @@ let g:elm_setup_keybindings = 0
 
 " Rust
 let g:rustfmt_autosave = 1
+
+" Haskell
+let g:haskell_enable_quantification = 1   " to enable highlighting of `forall`
+let g:haskell_enable_recursivedo = 1      " to enable highlighting of `mdo` and `rec`
+let g:haskell_enable_arrowsyntax = 1      " to enable highlighting of `proc`
+let g:haskell_enable_pattern_synonyms = 1 " to enable highlighting of `pattern`
+let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles
+let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`
+let g:haskell_backpack = 1                " to enable highlighting of backpack keywords
+
+" Common Lisp Rainbow
+augroup rainbow_lisp
+  autocmd!
+  autocmd FileType lisp,clojure,scheme RainbowParentheses
+augroup END
+
 map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<cr>

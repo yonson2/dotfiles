@@ -49,7 +49,7 @@ font pango:SFNS Display 9
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec --no-startup-id TERMINAL=kitty i3-sensible-terminal
 #bindsym $mod+Return exec --no-startup-id hyper
 
 # kill focused window
@@ -60,7 +60,10 @@ bindsym $mod+Shift+q kill
 # bindsym $mod+d exec rofi -show run -lines 5 -eh 2 -width 100 -padding 450 -opacity "85" -bw 0 -bc "$base01" -bg "$base01" -fg "$base07" -hlbg "$base01" -hlfg "#9575cd" -font "SFNS Display UltraLight 50"
 
 # Use albert launcher instead ($mod+d is bound in the program)
-exec --no-startup-id QT_AUTO_SCREEN_SCALE_FACTOR=1 albert
+# exec --no-startup-id QT_AUTO_SCREEN_SCALE_FACTOR=1 albert
+
+# dmenu launcher
+bindsym $mod+d exec --no-startup-id dmenu_run
 
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
@@ -232,8 +235,8 @@ bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 5 # decrease 
 bindsym $mod+grave exec --no-startup-id xbacklight -set 1 # Set to minimum
 
 # Media player controls
-bindsym XF86AudioPlay exec playerctl play
-bindsym XF86AudioPause exec playerctl pause
+bindsym XF86AudioPlay exec playerctl play-pause
+# bindsym XF86AudioPause exec playerctl pause
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 
@@ -281,7 +284,7 @@ new_window pixel 0
 #for_window [class="Thunderbird"] border none
 
 # Unclutter, hide mouse automatically
-exec --no-startup-id unclutter -idle 1
+# exec --no-startup-id unclutter -idle 1
 
 # change resolution to 1440p, also need to tweak fonts accordingly
 #exec --no-startup-id ~/.screenlayout/1440p.sh

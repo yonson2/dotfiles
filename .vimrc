@@ -1,35 +1,45 @@
 " auto-install vim-plug
 "
 if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
 call plug#begin('~/.vim/plugged')
-Plug 'joshdick/onedark.vim' " Syntax theme inspired by atom's one dark, with airline support. colorscheme onedark
+Plug 'rakr/vim-one' " Atom theme, dark and light variant
 Plug 'ctrlpvim/ctrlp.vim' " Fuzzy finder.
 Plug 'vim-airline/vim-airline' " Status bar
 Plug 'sheerun/vim-polyglot' " Syntax highlightning for multiple languages
-" Plug 'neomake/neomake' "Async linter
-" Plug 'numkil/ag.nvim' " Needs ag (the_silver_searcher) to be installed on system :S
-Plug 'jremmen/vim-ripgrep' " Like ag but with ripgrep
+Plug 'jremmen/vim-ripgrep' " Like ag but with ripgrep. depends on ripgrep
+Plug 'mileszs/ack.vim' " Like ag, and ripgrep. depends on ack
 Plug 'jiangmiao/auto-pairs' " Inserts matching pairs, probably only useful for coding
 Plug 'nathanaelkane/vim-indent-guides' " Indentation visual guides
 Plug 'tpope/vim-commentary' " add/remove comments, gcc for line, gc<motion>
 Plug 'w0rp/ale' " Linting
+Plug 'tpope/vim-surround' " quoting/parenthesizing made simple
+" Plug 'elmcast/elm-vim' " Better elm handling than the one provided by polyglot
+Plug 'tpope/vim-repeat' " Enable . repeat for things like vim-surround
+" Plug 'l04m33/vlime', {'rtp': 'vim/'} " Common Lisp
+Plug 'junegunn/rainbow_parentheses.vim'
+Plug 'kovisoft/paredit' " Common Lisp parenthesis help
 call plug#end()
 
+" Set shell to bash
+set shell=/bin/bash
+
+" 256 color support
+set t_Co=256
+" set t_AB=^[[48;5;%dm
+" set t_AF=^[[38;5;%dm
+
 " Theme
-" Previously used colorschemes
-" Plug 'morhetz/gruvbox' " Syntax theme. colorscheme gruvbox
-" Plug 'whatyouhide/vim-gotham' " Darker syntax theme, with airline support. colorscheme gotham
-" Plug 'junegunn/seoul256.vim' " Low contrast theme. colorscheme seoul256.
-" Plug 'KeitaNakamura/neodark.vim' " Inspired by onedark, let g:neodark#background=black|gray|brown before colorscheme neodark
-" Plug 'vim-airline/vim-airline-themes'
 syntax enable
 set background=dark
-colorscheme onedark
-let g:airline_theme= 'onedark' " zenburn is pretty good with gruvbox
+colorscheme one
+call one#highlight('Normal', 'abb2bf', '0f131b', 'none') " change bg color
+
+let g:airline_theme='one'
 
 set showcmd             " Show (partial) command in status line.
 set showmatch           " Show matching brackets.
@@ -46,6 +56,8 @@ set relativenumber      " Relative numbers
 set hidden              " Hidden buffers are still loaded into memory.
 set autoread            " Auto reload changed files
 set showbreak=↪         " Display character indicating new line
+set wildmenu            " visual autocomplete for command menu
+set colorcolumn=120     " vertical indicator
 
 " Make CtrlP fast https://github.com/kien/ctrlp.vim/issues/174
 set wildignore+=*/.git/*,*/tmp/*,*.swp
@@ -54,9 +66,10 @@ set wildignore+=*/.git/*,*/tmp/*,*.swp
 " Needs ripgrep
 if executable('rg')
   set grepprg=rg
-  let g:ctrlp_user_command = ['.git', 'cd %s && rg --files-with-matches ".*"', 'find %s -type f']
-  " let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
+  " let g:ctrlp_user_command = ['.git', 'cd %s && rg --files-with-matches ".*"', 'find %s -type f']
+  let g:ctrlp_user_command = 'rg -i %s --files --color=never --glob ""'
   let g:ctrlp_use_caching = 0
+  let g:rg_command = 'rg -i --vimgrep'
 endif
 
 " Map the leader key to SPACE
@@ -72,7 +85,7 @@ nnoremap <Leader>f :CtrlPMRUFiles<CR>
 " Save current buffers and settings to ~/today.ses // restore with vim -S ~/today.ses
 nnoremap <Leader>s :mksession! ~/.vim_session<CR>
 " Restore session
-nnoremap <Leader>r :source ~/.vim_session<CR>
+nnoremap <Leader>R :source ~/.vim_session<CR>
 " Go to next buffer
 nnoremap <Leader><Tab> :bn<CR>
 " Go to previous buffer
@@ -89,7 +102,7 @@ nnoremap <Leader>p :lprev<CR>
 " Toggle highlights
 nnoremap <Leader>t :noh<CR>
 " Map <Esc> to exit terminal mode
-nnoremap <Esc> <C-\><C-n>
+tnoremap <Esc> <C-\><C-n>
 " Select contents of a whole file
 nnoremap <Leader>a ggVG
 " Move lines around easily
@@ -160,15 +173,19 @@ let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = ''
 
-" Run neomake on every write
-" autocmd! BufWritePost * Neomake
+let g:airline_powerline_fonts = 1 " Use powerline fonts
+let g:airline_section_error = '%{ALEGetStatusLine()}' " use ALE statusline errors
 
-" Ale configuration
-let g:ale_sign_error = ''
-let g:ale_sign_warning = ''
-
-let g:ale_lint_on_save = 1
+" Ale settings
+let g:ale_statusline_format    = ['✗ %d', '⚠ %d', '◈ ok']
+let g:ale_echo_msg_format      = '[%linter%] %s [%severity%]'
+let g:ale_lint_on_save         = 1
 let g:ale_lint_on_text_changed = 0
+let g:ale_sign_column_always   = 1
+let g:ale_sign_error           = '✗'
+let g:ale_sign_warning         = '⚠'
+let g:ale_fixers = {}
+let g:ale_fixers['javascript'] = ['prettier']
 
 " javascript
 let g:neomake_javascript_enabled_makers = ['eslint']
@@ -176,5 +193,24 @@ let g:neomake_jsx_enabled_makers = ['eslint']
 let g:neomake_javascript_eslint_exe = system('PATH=$(npm bin):$PATH && which eslint | tr -d "\n"') "Prefer local eslint
 let g:javascript_plugin_jsdoc = 1
 
+" elm
+let g:polyglot_disabled = ['elm']
+let g:elm_setup_keybindings = 0
+
 " Rust
 let g:rustfmt_autosave = 1
+
+" Haskell
+let g:haskell_enable_quantification = 1   " to enable highlighting of `forall`
+let g:haskell_enable_recursivedo = 1      " to enable highlighting of `mdo` and `rec`
+let g:haskell_enable_arrowsyntax = 1      " to enable highlighting of `proc`
+let g:haskell_enable_pattern_synonyms = 1 " to enable highlighting of `pattern`
+let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles
+let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`
+let g:haskell_backpack = 1                " to enable highlighting of backpack keywords
+
+" Common Lisp Rainbow
+augroup rainbow_lisp
+  autocmd!
+  autocmd FileType lisp,clojure,scheme RainbowParentheses
+augroup END
