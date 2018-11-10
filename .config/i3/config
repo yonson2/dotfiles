@@ -49,7 +49,7 @@ font pango:SFNS Display 9
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec --no-startup-id TERMINAL=kitty i3-sensible-terminal
+bindsym $mod+Return exec --no-startup-id TERMINAL=qterminal i3-sensible-terminal
 #bindsym $mod+Return exec --no-startup-id hyper
 
 # kill focused window
@@ -136,7 +136,7 @@ assign[class="streamlink-twitch-gui"] $w5
 for_window [class="Lazarus"] floating enable
 
 # run weechat on $w3
-bindsym $mod+i exec --no-startup-id "i3-msg 'workspace 3:; exec /usr/bin/qterminal -e weechat;'"
+bindsym $mod+i exec --no-startup-id "i3-msg 'workspace 3:; exec /usr/bin/sakura -e weechat;'"
 
 # switch to workspace
 bindsym $mod+1 workspace $w1
@@ -199,7 +199,7 @@ bindsym $mod+r mode "resize"
 # finds out, if available)
 
 bar {
-  font pango: Fira Code, FontAwesome 9
+  font pango: IBM Plex Mono, Fira Code, FontAwesome 9
         status_command i3blocks -c ~/.config/i3/i3blocks.conf
   # height 25
   separator_symbol "  "
@@ -214,7 +214,7 @@ bar {
         inactive_workspace $base01 $base01    $base03
         urgent_workspace   $base01 $base01    $base08
       }
-  mode hide
+  mode dock
 }
 # Toggle between dock mode and hide mode
 bindsym $mod+m bar mode toggle
@@ -272,7 +272,7 @@ exec --no-startup-id dunst
 #exec --no-startup-id redshift
 
 # launch this apps on startup
-exec --no-startup-id /usr/bin/libinput-gestures
+# exec --no-startup-id /usr/bin/libinput-gestures
 
 # output ntilde (ñ) when pressing Altgr + n
 exec --no-startup-id xkbcomp ~/.config/keylayout.xkb $DISPLAY
