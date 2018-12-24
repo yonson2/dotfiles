@@ -39,7 +39,7 @@ function fish_user_key_bindings
     bind '$' bind_dollar
 end
 
-# start x at login
+# start x and set path at login
 
 if status --is-login
   if test -z "$DISPLAY" -a $XDG_VTNR = 1
@@ -47,9 +47,6 @@ if status --is-login
   end
 end
 
+set fish_user_paths --universal $fish_user_paths ~/bin ~/.nimble/bin ~/go/bin # (npm bin -g)
 # opam configuration
 # source /home/peter/.opam/opam-init/init.fish > /dev/null 2> /dev/null; or true
-set fish_user_paths --universal $fish_user_paths ~/bin ~/.nimble/bin ~/go/bin (npm bin -g)
-
-# themes config
-set -x SPACEFISH_KUBECONTEXT_SHOW false
