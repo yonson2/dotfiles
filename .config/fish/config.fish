@@ -3,11 +3,16 @@ set TERM xterm-256color
 alias vim "nvim"
 alias ovim "usr/bin/vim"
 alias dotfiles "git --git-dir=.dotfiles.git"
-alias stream "mpv --force-seekable=yes"
 alias say 'echo "$1" | espeak -v english-us -s 120 2>/dev/null'
-alias e 'emacsclient -nc -s instance1'
+# alias e 'emacsclient -nc -s instance1'
 alias vimdiff 'nvim -d'
-alias tele 'mpv -audio-device=alsa/hdmi:CARD=PCH,DEV=0'
+alias mpvtv 'mpv -audio-device=alsa/hdmi:CARD=PCH,DEV=0'
+
+if not functions -q fisher
+    set -q XDG_CONFIG_HOME; or set XDG_CONFIG_HOME ~/.config
+    curl https://git.io/fisher --create-dirs -sLo $XDG_CONFIG_HOME/fish/functions/fisher.fish
+    fish -c fisher
+end
 
 # double-bang (like in bash)
 function bind_bang
@@ -44,4 +49,7 @@ end
 
 # opam configuration
 # source /home/peter/.opam/opam-init/init.fish > /dev/null 2> /dev/null; or true
-set fish_user_paths --universal $fish_user_paths ~/bin ~/.nimble/bin (npm bin -g)
+set fish_user_paths --universal $fish_user_paths ~/bin ~/.nimble/bin ~/go/bin (npm bin -g)
+
+# themes config
+set -x SPACEFISH_KUBECONTEXT_SHOW false
