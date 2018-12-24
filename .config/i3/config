@@ -55,15 +55,17 @@ bindsym $mod+Return exec --no-startup-id TERMINAL=qterminal i3-sensible-terminal
 # kill focused window
 bindsym $mod+Shift+q kill
 
+# App Launchers
 # start dmenu (a program launcher)
 #bindsym $mod+d exec dmenu_run
 # bindsym $mod+d exec rofi -show run -lines 5 -eh 2 -width 100 -padding 450 -opacity "85" -bw 0 -bc "$base01" -bg "$base01" -fg "$base07" -hlbg "$base01" -hlfg "#9575cd" -font "SFNS Display UltraLight 50"
+bindsym $mod+d exec fish -c "rofi -show run"
 
 # Use albert launcher instead ($mod+d is bound in the program)
 # exec --no-startup-id QT_AUTO_SCREEN_SCALE_FACTOR=1 albert
 
 # dmenu launcher
-bindsym $mod+d exec --no-startup-id dmenu_run
+# bindsym $mod+d exec --no-startup-id dmenu_run
 
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
@@ -136,7 +138,7 @@ assign[class="streamlink-twitch-gui"] $w5
 for_window [class="Lazarus"] floating enable
 
 # run weechat on $w3
-bindsym $mod+i exec --no-startup-id "i3-msg 'workspace 3:; exec /usr/bin/sakura -e weechat;'"
+bindsym $mod+i exec --no-startup-id "i3-msg 'workspace 3:; exec /usr/bin/qterminal -e weechat;'"
 
 # switch to workspace
 bindsym $mod+1 workspace $w1
@@ -214,7 +216,7 @@ bar {
         inactive_workspace $base01 $base01    $base03
         urgent_workspace   $base01 $base01    $base08
       }
-  mode dock
+  mode hide
 }
 # Toggle between dock mode and hide mode
 bindsym $mod+m bar mode toggle
@@ -249,7 +251,7 @@ bindsym Print exec --no-startup-id scrot -q 100 '%Y-%m-%d-%s_$wx$h_scrot.jpg' -e
 exec --no-startup-id thunar --daemon
 
 #Emacs in daemon mode
-exec --no-startup-id emacs --daemon=instance1
+# exec --no-startup-id emacs --daemon=instance1
 
 #f.lux fluxgui xflux-gui-git
 exec --no-startup-id fluxgui
@@ -278,7 +280,10 @@ exec --no-startup-id dunst
 exec --no-startup-id xkbcomp ~/.config/keylayout.xkb $DISPLAY
 
 #hide title bars by default
+hide_edge_borders smart
 new_window pixel 0
+bindsym $mod+Shift+b border normal
+bindsym $mod+Shift+Ctrl+b border pixel 0
 #for_window [class="Firefox"] border none
 # for_window [class="qterminal"] border none
 #for_window [class="Thunderbird"] border none
