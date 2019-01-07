@@ -9,12 +9,11 @@ endif
 call plug#begin('~/.vim/plugged')
 Plug 'rakr/vim-one' " Atom theme, dark and light variant
 Plug 'ctrlpvim/ctrlp.vim' " Fuzzy finder.
+Plug 'junegunn/fzf.vim' " another fuzzy finder, provides other niceties, depends on fzf
 Plug 'vim-airline/vim-airline' " Status bar
 Plug 'sheerun/vim-polyglot' " Syntax highlightning for multiple languages
-Plug 'jremmen/vim-ripgrep' " Like ag but with ripgrep. depends on ripgrep
 Plug 'mileszs/ack.vim' " Like ag, and ripgrep. depends on ack
 Plug 'jiangmiao/auto-pairs' " Inserts matching pairs, probably only useful for coding
-Plug 'nathanaelkane/vim-indent-guides' " Indentation visual guides
 Plug 'tpope/vim-commentary' " add/remove comments, gcc for line, gc<motion>
 Plug 'w0rp/ale' " Linting
 Plug 'tpope/vim-surround' " quoting/parenthesizing made simple
@@ -23,6 +22,9 @@ Plug 'tpope/vim-repeat' " Enable . repeat for things like vim-surround
 " Plug 'l04m33/vlime', {'rtp': 'vim/'} " Common Lisp
 Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'kovisoft/paredit' " Common Lisp parenthesis help
+Plug 'vimwiki/vimwiki', { 'branch': 'dev' } " Personal wiki for vim
+Plug 'zxqfl/tabnine-vim' " the all-language auto-completer
+Plug 'Yggdroot/indentLine' " displays thin vertical lines at each indentation level
 call plug#end()
 
 " Set shell to bash
@@ -39,8 +41,6 @@ syntax enable
 set background=dark
 colorscheme one
 " call one#highlight('Normal', 'abb2bf', '0f131b', 'none') " change bg color
-
-" let g:airline_theme='papercolor'
 
 set showcmd             " Show (partial) command in status line.
 set showmatch           " Show matching brackets.
@@ -70,7 +70,7 @@ if executable('rg')
   " let g:ctrlp_user_command = ['.git', 'cd %s && rg --files-with-matches ".*"', 'find %s -type f']
   let g:ctrlp_user_command = 'rg -i %s --files --color=never --glob ""'
   let g:ctrlp_use_caching = 0
-  let g:rg_command = 'rg -i --vimgrep'
+  " let g:rg_command = 'rg -i --vimgrep'
 endif
 
 " Map the leader key to SPACE
@@ -175,7 +175,10 @@ let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = ''
 
 let g:airline_powerline_fonts = 1 " Use powerline fonts
-let g:airline_section_error = '%{ALEGetStatusLine()}' " use ALE statusline errors
+function ALE() abort
+    return exists('*ALEGetStatusLine') ? ALEGetStatusLine() : ''
+endfunction
+let g:airline_section_error = '%{ALE()}'
 
 " Ale settings
 let g:ale_statusline_format    = ['✗ %d', '⚠ %d', '◈ ok']
@@ -194,12 +197,12 @@ let g:neomake_jsx_enabled_makers = ['eslint']
 let g:neomake_javascript_eslint_exe = system('PATH=$(npm bin):$PATH && which eslint | tr -d "\n"') "Prefer local eslint
 let g:javascript_plugin_jsdoc = 1
 
-" elm
-let g:polyglot_disabled = ['elm']
-let g:elm_setup_keybindings = 0
+" " elm
+" let g:polyglot_disabled = ['elm']
+" let g:elm_setup_keybindings = 0
 
-" Rust
-let g:rustfmt_autosave = 1
+" " Rust
+" let g:rustfmt_autosave = 1
 
 " Haskell
 let g:haskell_enable_quantification = 1   " to enable highlighting of `forall`
@@ -210,45 +213,17 @@ let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles
 let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`
 let g:haskell_backpack = 1                " to enable highlighting of backpack keywords
 
+" nim
+" fix for commentary
+autocmd FileType nim setlocal commentstring=#\ %s
+
 " Common Lisp Rainbow
 augroup rainbow_lisp
   autocmd!
   autocmd FileType lisp,clojure,scheme RainbowParentheses
 augroup END
-" ## added by OPAM user-setup for vim / base ## 93ee63e278bdfc07d1139a748ed3fff2 ## you can edit, but keep this line
-let s:opam_share_dir = system("opam config var share")
-let s:opam_share_dir = substitute(s:opam_share_dir, '[\r\n]*$', '', '')
 
-let s:opam_configuration = {}
-
-function! OpamConfOcpIndent()
-  execute "set rtp^=" . s:opam_share_dir . "/ocp-indent/vim"
-endfunction
-let s:opam_configuration['ocp-indent'] = function('OpamConfOcpIndent')
-
-function! OpamConfOcpIndex()
-  execute "set rtp+=" . s:opam_share_dir . "/ocp-index/vim"
-endfunction
-let s:opam_configuration['ocp-index'] = function('OpamConfOcpIndex')
-
-function! OpamConfMerlin()
-  let l:dir = s:opam_share_dir . "/merlin/vim"
-  execute "set rtp+=" . l:dir
-endfunction
-let s:opam_configuration['merlin'] = function('OpamConfMerlin')
-
-let s:opam_packages = ["ocp-indent", "ocp-index", "merlin"]
-let s:opam_check_cmdline = ["opam list --installed --short --safe --color=never"] + s:opam_packages
-let s:opam_available_tools = split(system(join(s:opam_check_cmdline)))
-for tool in s:opam_packages
-  " Respect package order (merlin should be after ocp-index)
-  if count(s:opam_available_tools, tool) > 0
-    call s:opam_configuration[tool]()
-  endif
-endfor
-" ## end of OPAM user-setup addition for vim / base ## keep this line
-" ## added by OPAM user-setup for vim / ocp-indent ## 6baf8a86d8eaac1b970c2475fb6d207e ## you can edit, but keep this line
-if count(s:opam_available_tools,"ocp-indent") == 0
-  source "/home/peter/.opam/4.07.0/share/ocp-indent/vim/indent/ocaml.vim"
-endif
-" ## end of OPAM user-setup addition for vim / ocp-indent ## keep this line
+"TAB and S-TAB bindings
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"

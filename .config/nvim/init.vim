@@ -7,7 +7,9 @@ endif
 
 call plug#begin('~/.config/nvim/plugged')
 Plug 'rakr/vim-one' " Atom theme, dark and light variant
+Plug 'bluz71/vim-moonfly-colors' " Dark colorscheme
 Plug 'ctrlpvim/ctrlp.vim' " Fuzzy finder.
+Plug 'junegunn/fzf.vim' " another fuzzy finder, provides other niceties
 Plug 'vim-airline/vim-airline' " Status bar
 Plug 'sheerun/vim-polyglot' " Syntax highlightning for multiple languages
 Plug 'mileszs/ack.vim' " Like ag, and ripgrep. depends on ack
@@ -23,6 +25,7 @@ Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'kovisoft/paredit' " Common Lisp parenthesis help
 Plug 'vimwiki/vimwiki', { 'branch': 'dev' } " Personal wiki for vim
 Plug 'zxqfl/tabnine-vim' " the all-language auto-completer
+Plug 'Yggdroot/indentLine' " displays thin vertical lines at each indentation level
 call plug#end()
 
 " Or if you have Neovim >= 0.1.5
@@ -34,10 +37,12 @@ endif
 set t_Co=256
 syntax enable
 set background=dark
+" colorscheme moonfly
 colorscheme one
-call one#highlight('Normal', 'abb2bf', '0f131b', 'none') " change bg color
-
+" call one#highlight('Normal', 'abb2bf', '0f131b', 'none') " change bg color
+" let g:airline_theme='moonfly'
 let g:airline_theme='one'
+let g:indentLine_setColors = 0
 
 set showcmd             " Show (partial) command in status line.
 set showmatch           " Show matching brackets.
@@ -200,7 +205,7 @@ let g:javascript_plugin_jsdoc = 1
 " let g:elm_setup_keybindings = 0
 
 " Rust
-let g:rustfmt_autosave = 1
+" let g:rustfmt_autosave = 1
 
 " Haskell
 let g:haskell_enable_quantification = 1   " to enable highlighting of `forall`

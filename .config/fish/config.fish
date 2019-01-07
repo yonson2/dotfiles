@@ -1,7 +1,7 @@
 # alias
 set TERM xterm-256color
-alias vim "nvim"
-alias ovim "usr/bin/vim"
+# alias vim "nvim"
+# alias ovim "usr/bin/vim"
 alias dotfiles "git --git-dir=.dotfiles.git"
 alias say 'echo "$1" | espeak -v english-us -s 120 2>/dev/null'
 # alias e 'emacsclient -nc -s instance1'
@@ -45,6 +45,14 @@ if status --is-login
   if test -z "$DISPLAY" -a $XDG_VTNR = 1
     exec startx
   end
+end
+
+# Base16 Shell
+# https://github.com/chriskempson/base16-shell for more instructions
+if status --is-interactive
+  set -gx FZF_DEFAULT_COMMAND  'rg --files --no-ignore-vcs --hidden'
+  set BASE16_SHELL "$HOME/.config/base16-shell/"
+  source "$BASE16_SHELL/profile_helper.fish"
 end
 
 set fish_user_paths --universal $fish_user_paths ~/bin ~/.nimble/bin ~/go/bin # (npm bin -g)
