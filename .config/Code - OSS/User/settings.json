@@ -1,0 +1,78 @@
+{
+    "window.menuBarVisibility": "toggle",
+    "editor.fontSize": 12,
+    "editor.fontFamily": "'Fira Code', 'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
+    "vim.leader": "<space>",
+    "editor.fontLigatures": true,
+    "vim.textwidth": 120,
+    "workbench.colorTheme": "Atom One Dark",
+    "keyboard.dispatch": "keyCode",
+    "vim.normalModeKeyBindings": [
+        {
+            "before": ["leader", "t"],
+            "commands": [ ":nohl" ]
+        },
+        {
+            "before": ["<leader>", "<tab>"],
+            "commands": ["workbench.action.nextEditor"]
+        },
+        {
+            "before": ["<leader>", "<shift>", "<tab>"],
+            "commands": ["workbench.action.previousEditor"]
+        },
+        {
+            "before": ["<leader>", "d"],
+            "commands": ["workbench.action.closeActiveEditor"]
+        },
+        {
+            "before": ["leader", "a"],
+            "commands": [
+                "editor.action.selectAll",
+            ]
+        },
+        {
+            "before": ["leader", "j"],
+            "commands": [
+                "editor.action.moveLinesDownAction",
+            ]
+        },
+        {
+            "before": ["leader", "k"],
+            "commands": [
+                "editor.action.moveLinesUpAction",
+            ]
+        },
+        {
+            "before": ["=", "="],
+            "commands": [
+                "editor.action.reindentlines",
+            ]
+        },
+        {
+            "before": ["leader", "o"],
+            "commands": [
+                "workbench.action.quickOpen",
+            ]
+        },
+    ],
+    "vim.visualModeKeyBindings": [
+        {
+            "before": ["leader", "j"],
+            "commands": [
+                "editor.action.moveLinesDownAction",
+            ]
+        },
+        {
+            "before": ["leader", "k"],
+            "commands": [
+                "editor.action.moveLinesUpAction",
+            ]
+        },
+        {
+            "before": ["="],
+            "commands": [
+                "editor.action.reindentselectedlines",
+            ]
+        },
+    ]
+}
