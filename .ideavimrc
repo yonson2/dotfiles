@@ -1,3 +1,7 @@
+""" Plugins
+set commentary
+set surround
+
 """ Map leader to space
 let mapleader=" "
 
@@ -20,4 +24,9 @@ map == :action EditorIndentLineOrSelection<CR>
 map = :action EditorIndentSelection<CR>
 
 """ Open fuzzy finder
-map <leader>o :action GotoFile<CR>
+""" map <leader>o :action GotoFile<CR>
+map <leader>o :action FileStructurePopup<CR>
+
+""" Errors
+map <leader>n :action GotoNextError<CR>
+map <leader>p :action GotoPreviousError<CR>
