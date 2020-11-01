@@ -1,0 +1,23 @@
+""" Map leader to space
+let mapleader=" "
+
+""" map <leader>t :nohl
+
+"""Tab Movement
+map <S-Space><Tab> :action PreviousEditorTab<CR>
+map <leader><Tab> :action NextEditorTab<CR>
+map <leader>d :action CloseActiveTab<CR>
+
+""" Move selected lines up and down
+map <leader>j :action MoveStatementDown<CR>
+map <leader>k :action MoveStatementUp<CR>
+
+"""Select all text
+map <leader>a :action $SelectAll<CR>
+
+""" Intent Selected lines
+map == :action EditorIndentLineOrSelection<CR>
+map = :action EditorIndentSelection<CR>
+
+""" Open fuzzy finder
+map <leader>o :action GotoFile<CR>
