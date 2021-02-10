@@ -1,0 +1,6 @@
+"playerctl previous"
+  XF86AudioPrev
+"playerctl play-pause"
+  XF86AudioPlay
+"playerctl next"
+  XF86AudioNext

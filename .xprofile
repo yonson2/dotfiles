@@ -1,0 +1,14 @@
+# Correctly bind multimedia keys
+xbindkeys
+# Load Xresources
+xrdb -load ~/.Xresources
+# Start compositor
+picom --config ~/.config/picom/picom.conf &
+# block caps-lock
+setxkbmap -layout gb -option caps:escape
+# use custom keys for gb keyboard
+test -f ~/.config/keylayout.xkb && xkbcomp ~/.config/keylayout.xkb $DISPLAY
+#redshift a.k.a f.lux
+redshift &
+#set random wallpaper
+feh --bg-fill `~/bin/wall -api 5MWCr8dTk3XCkowqB4Q7N19002QOyy8j` &
