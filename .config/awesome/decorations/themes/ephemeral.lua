@@ -36,7 +36,8 @@ client.connect_signal("request::titlebars", function(c)
             -- Generated buttons
             decorations.button(c, gen_button_shape, x.color3, gen_button_color_unfocused, x.color11, gen_button_size, gen_button_margin, "minimize"),
             decorations.button(c, gen_button_shape, x.color2, gen_button_color_unfocused, x.color10, gen_button_size, gen_button_margin, "maximize"),
-            decorations.text_button(c, "", "Material Icons 9", x.color1, gen_button_color_unfocused, x.color9, gen_button_size, gen_button_margin, "close"),
+            decorations.button(c, gen_button_shape, x.color1, gen_button_color_unfocused, x.color9, gen_button_size, gen_button_margin, "close"),
+            -- decorations.text_button(c, "", "Material Icons 9", x.color1, gen_button_color_unfocused, x.color9, gen_button_size, gen_button_margin, "close"),
 
             -- Create some extra padding at the edge
             helpers.horizontal_pad(gen_button_margin / 2),

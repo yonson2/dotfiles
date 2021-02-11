@@ -345,6 +345,7 @@ local floating_client_placement = function(c)
     -- Else use this placement
     local p = awful.placement.no_overlap + awful.placement.no_offscreen
     return p(c, {honor_padding = true, honor_workarea=true, margins = beautiful.useless_gap * 2})
+
 end
 
 local centered_client_placement = function(c)
@@ -387,8 +388,6 @@ awful.rules.rules = {
                 "DTA",  -- Firefox addon DownThemAll.
                 "copyq",  -- Includes session name in class.
                 "floating_terminal",
-                "riotclientux.exe",
-                "leagueclientux.exe",
                 "Devtools", -- Firefox devtools
             },
             class = {
@@ -432,14 +431,7 @@ awful.rules.rules = {
     {
         rule_any = {
             class = {
-                "lt-love",
-                "portal2_linux",
-                "csgo_linux64",
-                "EtG.x86_64",
-                "factorio",
                 "dota2",
-                "Terraria.bin.x86",
-                "dontstarve_steam",
             },
             instance = {
                 "synthetik.exe",
@@ -471,12 +463,10 @@ awful.rules.rules = {
                 "discord",
                 "music",
                 "markdown_input",
-                "scratchpad",
             },
             instance = {
                 "music",
                 "markdown_input",
-                "scratchpad",
             },
             role = {
                 "GtkFileChooserDialog",
@@ -553,8 +543,6 @@ awful.rules.rules = {
         rule_any = {
             class = {
                 "Alacritty",
-                "Termite",
-                "mpvtube",
                 "kitty",
                 "st-256color",
                 "st",
@@ -626,36 +614,6 @@ awful.rules.rules = {
         end
     },
 
-    -- Keepass
-    {
-        rule_any = { class = { "KeePassXC" } },
-        except_any = { name = { "KeePassXC-Browser Confirm Access" }, type = { "dialog" } },
-        properties = { floating = true, width = screen_width * 0.7, height = screen_height * 0.75},
-    },
-
-    -- Scratchpad
-    {
-        rule_any = {
-            instance = {
-                "scratchpad",
-                "markdown_input"
-            },
-            class = {
-                "scratchpad",
-                "markdown_input"
-            },
-        },
-        properties = {
-            skip_taskbar = false,
-            floating = true,
-            ontop = false,
-            minimized = true,
-            sticky = false,
-            width = screen_width * 0.7,
-            height = screen_height * 0.75
-        }
-    },
-
     -- Markdown input
     {
         rule_any = {
@@ -712,47 +670,6 @@ awful.rules.rules = {
         end
     },
 
-    -- Dragon drag and drop utility
-    {
-        rule_any = {
-            class = {
-                "Dragon-drag-and-drop",
-                "Dragon",
-            },
-        },
-        properties = {
-            floating = true,
-            ontop = true,
-            sticky = true,
-            width = screen_width * 0.3,
-        },
-        callback = function (c)
-            awful.placement.bottom_right(c, {
-                honor_padding = true,
-                honor_workarea = true,
-                margins = { bottom = beautiful.useless_gap * 2, right = beautiful.useless_gap * 2}
-            })
-        end
-    },
-
-    -- Magit window
-    {
-        rule = { instance = "Magit" },
-        properties = { floating = true, width = screen_width * 0.55, height = screen_height * 0.6 }
-    },
-
-    -- Steam guard
-    {
-        rule = { name = "Steam Guard - Computer Authorization Required" },
-        properties = { floating = true },
-        -- Such a stubborn window, centering it does not work
-        -- callback = function (c)
-        --     gears.timer.delayed_call(function()
-        --         awful.placement.centered(c,{honor_padding = true, honor_workarea=true})
-        --     end)
-        -- end
-    },
-
     -- MPV
     {
         rule = { class = "mpv" },
@@ -768,11 +685,6 @@ awful.rules.rules = {
                     honor_padding = true,
                     honor_workarea = true,
                 })
-                -- awful.placement.bottom_right(c, {
-                --     honor_padding = true,
-                --     honor_workarea = true,
-                --     margins = { bottom = beautiful.useless_gap * 2, right = beautiful.useless_gap * 2}
-                -- })
             end
 
             -- Restore `ontop` after fullscreen is disabled
@@ -782,6 +694,19 @@ awful.rules.rules = {
                     c.ontop = true
                 end
             end)
+        end
+    },
+    -- FIREFOX
+    {
+        rule_any = { class = "firefox" },
+        properties = {},
+        callback = function (c)
+            awful.placement.centered(c, {
+                honor_padding = true,
+                honor_workarea = true,
+                margins = { bottom = 0, right = 0}
+            })
+
         end
     },
 
@@ -845,7 +770,7 @@ awful.rules.rules = {
             instance = { "Toolkit" },
             type = { "dialog" }
         },
-        properties = { screen = 1, tag = awful.screen.focused().tags[2] },
+        properties = { screen = 1, tag = awful.screen.focused().tags[2], margins = 0 },
     },
 
     -- Games
