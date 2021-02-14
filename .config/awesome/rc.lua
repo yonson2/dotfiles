@@ -334,6 +334,9 @@ awful.screen.connect_for_each_screen(function(s)
     -- ...
 end)
 
+-- Remove gap on second workspace
+awful.screen.focused().tags[2].gap = 0
+
 -- Determines how floating clients should be placed
 local floating_client_placement = function(c)
     -- If the layout is floating or there are no other visible
@@ -427,19 +430,6 @@ awful.rules.rules = {
         properties = { floating = false }
     },
 
-    -- Fullscreen clients
-    {
-        rule_any = {
-            class = {
-                "dota2",
-            },
-            instance = {
-                "synthetik.exe",
-            },
-        },
-        properties = { fullscreen = true }
-    },
-
     -- -- Unfocusable clients (unless clicked with the mouse)
     -- -- If you want to prevent focusing even when clicking them, you need to
     -- -- modify the left click client mouse bind in keys.lua
@@ -459,7 +449,6 @@ awful.rules.rules = {
                 "dialog",
             },
             class = {
-                "Steam",
                 "discord",
                 "music",
                 "markdown_input",
@@ -485,7 +474,6 @@ awful.rules.rules = {
             },
             class = {
                 "qutebrowser",
-                "Sublime_text",
                 "firefox",
                 "Nightly",
                 "^editor$",
@@ -704,52 +692,9 @@ awful.rules.rules = {
             awful.placement.centered(c, {
                 honor_padding = true,
                 honor_workarea = true,
-                margins = { bottom = 0, right = 0}
+                -- margins = { bottom = 0, right = 0}
             })
 
-        end
-    },
-
-    -- "Fix" games that minimize on focus loss.
-    -- Usually this can be fixed by launching them with
-    -- SDL_VIDEO_MINIMIZE_ON_FOCUS_LOSS=0 but not all games use SDL
-    {
-        rule_any = {
-            instance = {
-                "synthetik.exe"
-            },
-        },
-        properties = {},
-        callback = function (c)
-            -- Unminimize automatically
-            c:connect_signal("property::minimized", function()
-                if c.minimized then
-                    c.minimized = false
-                end
-            end)
-        end
-    },
-
-    -- League of Legends client QoL fixes
-    {
-        rule = { instance = "league of legends.exe" },
-        properties = {},
-        callback = function (c)
-            local matcher = function (c)
-                return awful.rules.match(c, { instance = "leagueclientux.exe" })
-            end
-            -- Minimize LoL client after game window opens
-            for c in awful.client.iterate(matcher) do
-                c.urgent = false
-                c.minimized = true
-            end
-
-            -- Unminimize LoL client after game window closes
-            c:connect_signal("unmanage", function()
-                for c in awful.client.iterate(matcher) do
-                    c.minimized = false
-                end
-            end)
         end
     },
 
@@ -770,20 +715,7 @@ awful.rules.rules = {
             instance = { "Toolkit" },
             type = { "dialog" }
         },
-        properties = { screen = 1, tag = awful.screen.focused().tags[2], margins = 0 },
-    },
-
-    -- Games
-    {
-        rule_any = {
-            class = {
-                "dota2",
-            },
-            instance = {
-                "pathofexile_x64steam.exe",
-            },
-        },
-        properties = { screen = 1, tag = awful.screen.focused().tags[2] }
+        properties = { screen = 1, tag = awful.screen.focused().tags[2],},
     },
 
     -- Chatting
@@ -847,21 +779,6 @@ awful.rules.rules = {
             },
         },
         properties = { screen = 1, tag = awful.screen.focused().tags[4] }
-    },
-
-    -- Game clients/launchers
-    {
-        rule_any = {
-            class = {
-                "Steam",
-                -- "battle.net.exe",
-                -- "Lutris",
-            },
-            name = {
-                "Steam",
-            }
-        },
-        properties = { screen = 1, tag = awful.screen.focused().tags[8] }
     },
 
     -- Miscellaneous

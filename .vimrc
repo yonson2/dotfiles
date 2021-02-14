@@ -1,10 +1,15 @@
-" auto-install vim-plug
+set nocompatible
+
+"" auto-install vim-plug
 "
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
+
+" Disable the following polyglot languages to use a custom plugin
+let g:polyglot_disabled = ['go']
 
 call plug#begin('~/.vim/plugged')
 Plug 'rakr/vim-one' " Atom theme, dark and light variant
@@ -12,7 +17,7 @@ Plug 'ctrlpvim/ctrlp.vim' " Fuzzy finder.
 Plug 'vim-airline/vim-airline' " Status bar
 Plug 'sheerun/vim-polyglot' " Syntax highlightning for multiple languages
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim' "Install fzf and use it as a fuzzy finder for files, provides :Ag command
+Plug 'junegunn/fzf.vim' "Fzf, the fuzzy finder
 Plug 'jiangmiao/auto-pairs' " Inserts matching pairs, probably only useful for coding
 Plug 'tpope/vim-commentary' " add/remove comments, gcc for line, gc<motion>
 Plug 'w0rp/ale' " Linting
@@ -20,9 +25,11 @@ Plug 'tpope/vim-surround' " quoting/parenthesizing made simple
 Plug 'tpope/vim-repeat' " Enable . repeat for things like vim-surround
 Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'kovisoft/paredit' " Common Lisp parenthesis help
-" Plug 'vimwiki/vimwiki', { 'branch': 'dev' } " Personal wiki for vim
 Plug 'zxqfl/tabnine-vim' " the all-language auto-completer
 Plug 'Yggdroot/indentLine' " displays thin vertical lines at each indentation level
+if executable('go')
+  Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' } " Better support fo Go files
+endif
 call plug#end()
 
 " Set shell to bash
@@ -166,7 +173,7 @@ let g:airline_symbols.linenr = ''
 
 let g:airline_powerline_fonts = 1 " Use powerline fonts
 function ALE() abort
-    return exists('*ALEGetStatusLine') ? ALEGetStatusLine() : ''
+  return exists('*ALEGetStatusLine') ? ALEGetStatusLine() : ''
 endfunction
 let g:airline_section_error = '%{ALE()}'
 
@@ -202,9 +209,17 @@ augroup END
 
 " Go
 " fmt buffer when saving
-if executable('go')
-  au BufWritePost *.go !gofmt -w %
-endif
+let g:go_fmt_autosave = 1
+let g:go_fmt_command = "goimports"
+let g:go_addtags_transform = "camelcase"
+"" The following commands impact performance, disable if vim becomes slow:
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_build_constraints = 1
 
 "TAB and S-TAB bindings
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
