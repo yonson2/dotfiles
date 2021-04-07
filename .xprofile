@@ -1,0 +1,18 @@
+# Correctly bind multimedia keys
+xbindkeys
+# Load Xresources
+xrdb -load ~/.Xresources
+# Start compositor
+picom --config ~/.config/picom/picom.conf &
+# block caps-lock
+setxkbmap -layout gb -option caps:escape -variant extd
+# use custom keys for gb keyboard
+test -f ~/.config/keylayout.xkb && xkbcomp ~/.config/keylayout.xkb $DISPLAY
+#redshift a.k.a f.lux
+# until OLED patches land on the main linux kernel redshift conflicts with OLED backlighting apps
+# redshift &
+# OLED "backlight"
+oled_shmoled eDP-1 &
+#set random wallpaper
+# feh --bg-fill `~/bin/wall -api 5MWCr8dTk3XCkowqB4Q7N19002QOyy8j` &
+feh --bg-fill ~/Pictures/wallpapers/default.jpg
