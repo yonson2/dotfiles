@@ -321,18 +321,24 @@ local create_tooltip = function(w)
     local index = tooltip_counter
 
     adaptive_tooltip:insert(index, tooltip)
+    adaptive_tooltip.visible = true
 
     w:connect_signal("mouse::enter", function()
         -- Raise tooltip to the top of the stack
         adaptive_tooltip:set(1, tooltip)
-        adaptive_tooltip.visible = true
+        -- adaptive_tooltip.visible = true
     end)
     w:connect_signal("mouse::leave", function ()
-        adaptive_tooltip.visible = false
+        -- adaptive_tooltip.visible = false
     end)
 
     return tooltip
 end
+
+local battery_tooltip = create_tooltip(cute_battery_face)
+awesome.connect_signal("evil::battery", function(value)
+    battery_tooltip.markup = "Your battery is at <span foreground='" .. beautiful.battery_bar_active_color .."'><b>" .. tostring(value) .. "%</b></span>"
+end)
 
 local brightness_tooltip = create_tooltip(brightness_bar)
 awesome.connect_signal("evil::brightness", function(value)
@@ -362,11 +368,6 @@ awesome.connect_signal("evil::temperature", function(value)
     temperature_tooltip.markup = "Your CPU temperature is at <span foreground='" .. beautiful.temperature_bar_active_color .."'><b>" .. tostring(value) .. "°C</b></span>"
 end)
 
-local battery_tooltip = create_tooltip(cute_battery_face)
-awesome.connect_signal("evil::battery", function(value)
-    battery_tooltip.markup = "Your battery is at <span foreground='" .. beautiful.battery_bar_active_color .."'><b>" .. tostring(value) .. "%</b></span>"
-end)
-
 -- Add clickable mouse effects on some widgets
 helpers.add_hover_cursor(cpu, "hand1")
 helpers.add_hover_cursor(ram, "hand1")
@@ -375,7 +376,7 @@ helpers.add_hover_cursor(volume, "hand1")
 helpers.add_hover_cursor(brightness, "hand1")
 -- helpers.add_hover_cursor(mpd_song, "hand1")
 helpers.add_hover_cursor(search, "xterm")
--- helpers.add_hover_cursor(cute_battery_face, "hand1")
+helpers.add_hover_cursor(cute_battery_face, "hand1")
 
 
 -- Create the sidebar
