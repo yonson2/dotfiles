@@ -76,7 +76,7 @@ let mapleader="\<SPACE>"
 
 " Leader mappings
 " Open file menu
-nnoremap <Leader>o :CtrlP<CR>
+nnoremap <Leader>o :Files<CR>
 " Open buffer menu
 nnoremap <Leader>b :Buffers<CR>
 " Open most recently used files
@@ -100,8 +100,9 @@ nnoremap <Leader>n :lnext<CR>
 nnoremap <Leader>p :lprev<CR>
 " Toggle highlights
 nnoremap <Leader>t :noh<CR>
-" Map <Esc> to exit terminal mode
-tnoremap <Esc> <C-\><C-n>
+" Map <Esc> to exit terminal mode, while working well with fzf
+au TermOpen * tnoremap <buffer> <Esc> <c-\><c-n>
+au FileType fzf tunmap <buffer> <Esc>
 " Select contents of a whole file
 nnoremap <Leader>a ggVG
 " Move lines around easily

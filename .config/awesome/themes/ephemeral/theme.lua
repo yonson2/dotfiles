@@ -58,7 +58,7 @@ theme.border_radius = dpi(6)
 -- (Titlebar items can be customized in titlebars.lua)
 theme.titlebars_enabled = true
 theme.titlebar_size = dpi(32)
-theme.titlebar_title_enabled = false
+theme.titlebar_title_enabled = true
 theme.titlebar_font = "sans bold 9"
 -- Window title alignment: left, right, center
 theme.titlebar_title_align = "center"

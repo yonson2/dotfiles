@@ -6,6 +6,7 @@ local apps = require("apps")
 local decorations = require("decorations")
 
 local helpers = require("helpers")
+local revelation = require("revelation")
 
 local keys = {}
 
@@ -202,7 +203,7 @@ keys.globalkeys = gears.table.join(
     --{description = "focus the next screen", group = "screen"}),
     --awful.key({ superkey, ctrlkey }, "k", function () awful.screen.focus_relative(-1) end,
     --{description = "focus the previous screen", group = "screen"}),
-    
+    --
     -- Urgent or Undo:
     -- Jump to urgent client or (if there is no such client) go back
     -- to the last tag
@@ -359,12 +360,12 @@ keys.globalkeys = gears.table.join(
     -- Brightness
     awful.key( { }, "XF86MonBrightnessDown",
         function()
-            awful.spawn.with_shell("light -U 10")
+            awful.spawn.with_shell("light -U 5")
         end,
         {description = "decrease brightness", group = "brightness"}),
     awful.key( { }, "XF86MonBrightnessUp",
         function()
-            awful.spawn.with_shell("light -A 10")
+            awful.spawn.with_shell("light -A 5")
         end,
         {description = "increase brightness", group = "brightness"}),
 
@@ -438,18 +439,18 @@ keys.globalkeys = gears.table.join(
         end,
         {description = "toggle tray visibility", group = "awesome"}),
     -- Media keys
-    awful.key({ superkey }, "period", function() awful.spawn.with_shell("mpc -q next") end,
-        {description = "next song", group = "media"}),
-    awful.key({ superkey }, "comma", function() awful.spawn.with_shell("mpc -q prev") end,
-        {description = "previous song", group = "media"}),
-    awful.key({ superkey }, "space", function() awful.spawn.with_shell("mpc -q toggle") end,
-        {description = "toggle pause/play", group = "media"}),
-    awful.key({ superkey, shiftkey }, "period", function() awful.spawn.with_shell("mpvc next") end,
-        {description = "mpv next song", group = "media"}),
-    awful.key({ superkey, shiftkey }, "comma", function() awful.spawn.with_shell("mpvc prev") end,
-        {description = "mpv previous song", group = "media"}),
-    awful.key({ superkey, shiftkey}, "space", function() awful.spawn.with_shell("mpvc toggle") end,
-        {description = "mpv toggle pause/play", group = "media"}),
+    -- awful.key({ superkey }, "period", function() awful.spawn.with_shell("mpc -q next") end,
+    --     {description = "next song", group = "media"}),
+    -- awful.key({ superkey }, "comma", function() awful.spawn.with_shell("mpc -q prev") end,
+    --     {description = "previous song", group = "media"}),
+    -- awful.key({ superkey }, "space", function() awful.spawn.with_shell("mpc -q toggle") end,
+    --     {description = "toggle pause/play", group = "media"}),
+    -- awful.key({ superkey, shiftkey }, "period", function() awful.spawn.with_shell("mpvc next") end,
+    --     {description = "mpv next song", group = "media"}),
+    -- awful.key({ superkey, shiftkey }, "comma", function() awful.spawn.with_shell("mpvc prev") end,
+    --     {description = "mpv previous song", group = "media"}),
+    -- awful.key({ superkey, shiftkey}, "space", function() awful.spawn.with_shell("mpvc toggle") end,
+    --     {description = "mpv toggle pause/play", group = "media"}),
 
     awful.key({ superkey }, "F8", function() awful.spawn.with_shell("mpvc quit") end,
         {description = "mpv quit", group = "media"}),
@@ -518,9 +519,8 @@ keys.globalkeys = gears.table.join(
     -- Spawn file manager
     awful.key({ superkey }, "F2", apps.file_manager,
         {description = "file manager", group = "launcher"}),
-    -- Spawn music client
-    awful.key({ superkey }, "F3", apps.music,
-        {description = "music client", group = "launcher"}),
+    -- list all open windows
+    awful.key({ superkey }, "F3", revelation),
     -- -- Spawn cava in a terminal
     -- awful.key({ superkey }, "F4", function() awful.spawn("visualizer") end,
     --     {description = "cava", group = "launcher"}),
@@ -531,8 +531,8 @@ keys.globalkeys = gears.table.join(
     awful.key({ superkey }, "F11", function() awful.spawn("networks-rofi") end,
         {description = "spawn network dialog", group = "launcher"}),
     -- Toggle sidebar
-    -- awful.key({ superkey }, "grave", function() sidebar_toggle() end,
-    --     {description = "show or hide sidebar", group = "awesome"}),
+    awful.key({ superkey }, "dead_grave", function() sidebar_toggle() end,
+        {description = "show or hide sidebar", group = "awesome"}),
     awful.key({ superkey }, "o", function() sidebar_toggle() end,
         {description = "show or hide sidebar", group = "awesome"}),
     -- Toggle wibar(s)
@@ -547,8 +547,8 @@ keys.globalkeys = gears.table.join(
     awful.key({ superkey }, "i", apps.markdown_input,
         {description = "markdown scratchpad", group = "launcher"}),
     -- Editor
-    awful.key({ superkey }, "e", apps.editor,
-        {description = "editor", group = "launcher"}),
+    awful.key({ superkey }, "e", apps.org,
+        {description = "Write", group = "launcher"}),
     -- Quick edit file
     -- awful.key({ superkey, shiftkey }, "e",
     --     function()
@@ -756,13 +756,13 @@ for i = 1, ntags do
         awful.key({ superkey }, "#" .. i + 9,
             function ()
                 -- Tag back and forth
-                helpers.tag_back_and_forth(i)
+                -- helpers.tag_back_and_forth(i)
 
                 -- Simple tag view
-                -- local tag = mouse.screen.tags[i]
-                -- if tag then
-                -- tag:view_only()
-                -- end
+                local tag = mouse.screen.tags[i]
+                if tag then
+                tag:view_only()
+                end
             end,
             {description = "view tag #"..i, group = "tag"}),
         -- Toggle tag display.

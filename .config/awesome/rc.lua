@@ -185,6 +185,10 @@ local naughty = require("naughty")
 local theme_dir = os.getenv("HOME") .. "/.config/awesome/themes/" .. theme .. "/"
 beautiful.init(theme_dir .. "theme.lua")
 
+-- revelation
+local revelation = require("revelation")
+revelation.init()
+
 -- Error handling
 -- ===================================================================
 naughty.connect_signal("request::display_error", function(message, startup)

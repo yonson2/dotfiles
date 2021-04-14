@@ -196,3 +196,7 @@ alias write="write_stylus"
 
 function c {  curl cht.sh/"$@"; }
 source /home/peter/.phpbrew/bashrc
+
+# fnm
+export PATH=/home/peter/.fnm:$PATH
+eval "`fnm env`"

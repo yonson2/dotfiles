@@ -251,7 +251,7 @@ local bookmarks = wibox.widget {
     create_bookmark("downloads", user.dirs.downloads, x.color2, x.color10),
     create_bookmark("git", user.dirs.git, x.color6, x.color14),
     create_bookmark("pictures", user.dirs.pictures, x.color4, x.color12),
-    create_bookmark("projects", user.dirs.wallpapers, x.color5, x.color13),
+    create_bookmark("projects", user.dirs.projects, x.color5, x.color13),
     create_bookmark("screenshots", user.dirs.screenshots, x.color3, x.color11),
     spacing = dpi(10),
     layout = wibox.layout.fixed.vertical
@@ -462,7 +462,7 @@ local uptime = wibox.widget {
         font = "sans medium 11",
         widget = uptime_text
     },
-    spacing = dpi(10),
+    spacing = dpi(20),
     layout = wibox.layout.fixed.horizontal
 }
 
