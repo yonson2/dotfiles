@@ -26,6 +26,9 @@ Plug 'zxqfl/tabnine-vim' " the all-language auto-completer
 Plug 'Yggdroot/indentLine' " displays thin vertical lines at each indentation level
 if executable('go')
   Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' } " Better support fo Go files
+  if !executable('golines')
+    silent !go get -u github.com/segmentio/golines
+  endif
 endif
 call plug#end()
 
@@ -223,6 +226,11 @@ let g:go_highlight_function_calls = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_extra_types = 1
 let g:go_highlight_build_constraints = 1
+" Golines
+let g:go_fmt_command = "golines"
+let g:go_fmt_options = {
+    \ 'golines': '-m 128',
+    \ }
 
 "TAB and S-TAB bindings
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
