@@ -14,5 +14,5 @@ test -f ~/.config/keylayout.xkb && xkbcomp ~/.config/keylayout.xkb $DISPLAY
 # OLED "backlight"
 oled_shmoled eDP-1 &
 #set random wallpaper
+feh --bg-fill ~/Pictures/wallpapers/`shuf -i 1-9 -n 1`.jpg
 # feh --bg-fill `~/bin/wall -api 5MWCr8dTk3XCkowqB4Q7N19002QOyy8j` &
-feh --bg-fill ~/Pictures/wallpapers/default.jpg
