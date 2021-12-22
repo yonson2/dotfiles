@@ -10,8 +10,8 @@
   <property name="zoomStep" value="10.00000000"/>
   <property name="zoomStepScroll" value="2.00000000"/>
   <property name="displayDpi" value="72"/>
-  <property name="mainWndWidth" value="2964"/>
-  <property name="mainWndHeight" value="1936"/>
+  <property name="mainWndWidth" value="2984"/>
+  <property name="mainWndHeight" value="1956"/>
   <property name="maximized" value="false"/>
   <property name="showSidebar" value="true"/>
   <property name="sidebarWidth" value="179"/>
@@ -109,7 +109,7 @@
   </data>
   <data name="deviceClasses"/>
   <data name="tools">
-    <attribute name="current" type="string" value="pen"/>
+    <attribute name="current" type="string" value="selectRect"/>
     <data name="drawArrow">
       <attribute name="drawingType" type="string" value="default"/>
     </data>

@@ -322,7 +322,7 @@ keys.globalkeys = gears.table.join(
     -- Run program (d for dmenu ;)
     awful.key({ superkey }, "d",
         function()
-            awful.spawn.with_shell("rofi -matching fuzzy -show drun")
+            awful.spawn.with_shell("rofi -matching fuzzy -show drun -dpi 267")
         end,
         {description = "rofi launcher", group = "launcher"}),
 
@@ -649,6 +649,12 @@ keys.clientkeys = gears.table.join(
     -- Toggle fullscreen
     awful.key({ superkey,           }, "f",
         function (c)
+            -- first show titlebar to avoid fullscreen bug
+            if not c.fullscreen then
+                decorations.show(c)
+            else
+                decorations.hide(c)
+            end
             c.fullscreen = not c.fullscreen
             c:raise()
         end,
@@ -682,8 +688,8 @@ keys.clientkeys = gears.table.join(
     -- Close client
     awful.key({ superkey, shiftkey   }, "q",      function (c) c:kill() end,
         {description = "close", group = "client"}),
-    awful.key({ altkey }, "F4",      function (c) c:kill() end,
-        {description = "close", group = "client"}),
+    -- awful.key({ altkey }, "F4",      function (c) c:kill() end,
+    --     {description = "close", group = "client"}),
 
     -- Toggle floating
     awful.key({ superkey, ctrlkey }, "space",

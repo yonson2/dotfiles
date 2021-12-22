@@ -193,6 +193,7 @@ alias i="kitty +kitten icat"
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 alias vim="nvim"
 alias write="write_stylus"
+alias pose="docker-compose run --rm"
 
 function c {  curl cht.sh/"$@"; }
 source /home/peter/.phpbrew/bashrc
@@ -200,3 +201,12 @@ source /home/peter/.phpbrew/bashrc
 # fnm
 export PATH=/home/peter/.fnm:$PATH
 eval "`fnm env`"
+
+# flutter/android
+# export ANDROID_SDK_ROOT='/opt/android-sdk'
+export ANDROID_SDK_ROOT=$HOME/Android/Sdk
+export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools/
+export PATH=$PATH:$ANDROID_SDK_ROOT/tools/bin/
+export PATH=$PATH:$ANDROID_ROOT/emulator
+export PATH=$PATH:$ANDROID_SDK_ROOT/tools
+export CHROME_EXECUTABLE=/sbin/google-chrome-stable

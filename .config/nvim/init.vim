@@ -6,7 +6,7 @@ if empty(glob('~/.config/nvim/autoload/plug.vim'))
 endif
 
 " Disable the following polyglot languages to use a custom plugin
-let g:polyglot_disabled = ['go']
+let g:polyglot_disabled = ['go', 'crystal']
 
 call plug#begin('~/.config/nvim/plugged')
 Plug 'rakr/vim-one' " Atom theme, dark and light variant
@@ -17,18 +17,23 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim' "Fzf, the fuzzy finder
 Plug 'jiangmiao/auto-pairs' " Inserts matching pairs, probably only useful for coding
 Plug 'tpope/vim-commentary' " add/remove comments, gcc for line, gc<motion>
-Plug 'w0rp/ale' " Linting
 Plug 'tpope/vim-surround' " quoting/parenthesizing made simple
 Plug 'tpope/vim-repeat' " Enable . repeat for things like vim-surround
 Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'kovisoft/paredit' " Common Lisp parenthesis help
-Plug 'zxqfl/tabnine-vim' " the all-language auto-completer
 Plug 'Yggdroot/indentLine' " displays thin vertical lines at each indentation level
+Plug 'neoclide/coc.nvim', {'branch': 'release'} " Conquer of Completion
+" Plug 'elixir-lsp/coc-elixir', {'do': 'yarn install && yarn prepack'} " Elixir lsp
+" Plug 'w0rp/ale' " Linting
+" Plug 'zxqfl/tabnine-vim' " the all-language auto-completer
 if executable('go')
   Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' } " Better support fo Go files
   if !executable('golines')
     silent !go get -u github.com/segmentio/golines
   endif
+endif
+if executable('crystal')
+  Plug 'jlcrochet/vim-crystal'
 endif
 call plug#end()
 
@@ -69,6 +74,7 @@ set autoread            " Auto reload changed files
 set showbreak=↪         " Display character indicating new line
 set wildmenu            " visual autocomplete for command menu
 set colorcolumn=120     " vertical indicator
+set updatetime=2000      " Time Vim waits after you stop typing before it triggers stuff. Default=4000
 
 " Make CtrlP fast https://github.com/kien/ctrlp.vim/issues/174
 set wildignore+=*/.git/*,*/tmp/*,*.swp
@@ -98,9 +104,9 @@ nnoremap <Leader>d :bp\|bd #<CR>
 " go to current error.
 nnoremap <Leader><Leader> :ll<CR>
 "go to next error
-nnoremap <Leader>n :lnext<CR>
+" nnoremap <Leader>n :lnext<CR>
 " go to previous error
-nnoremap <Leader>p :lprev<CR>
+" nnoremap <Leader>p :lprev<CR>
 " Toggle highlights
 nnoremap <Leader>t :noh<CR>
 " Map <Esc> to exit terminal mode, while working well with fzf
@@ -148,7 +154,9 @@ nmap N Nzz
 " ag.nvim config
 let g:ag_working_path_mode="r" " Start searching from project root.
 
-" Airline
+" Statusline
+" set statusline=%f\ \ %y%m%r%h%w%=[%l,%v]\ \ \ \ \ \ [%L,%p%%]\ %n
+" " Airline
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
@@ -178,21 +186,6 @@ let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = ''
 
 let g:airline_powerline_fonts = 1 " Use powerline fonts
-function ALE() abort
-  return exists('*ALEGetStatusLine') ? ALEGetStatusLine() : ''
-endfunction
-let g:airline_section_error = '%{ALE()}'
-
-" Ale settings
-let g:ale_statusline_format    = ['✗ %d', '⚠ %d', '◈ ok']
-let g:ale_echo_msg_format      = '[%linter%] %s [%severity%]'
-let g:ale_lint_on_save         = 1
-let g:ale_lint_on_text_changed = 0
-let g:ale_sign_column_always   = 1
-let g:ale_sign_error           = '✗'
-let g:ale_sign_warning         = '⚠'
-let g:ale_fixers = {}
-let g:ale_fixers['javascript'] = ['prettier']
 
 " javascript
 let g:neomake_javascript_enabled_makers = ['eslint']
@@ -210,7 +203,7 @@ autocmd FileType nim setlocal commentstring=#\ %s
 " Common Lisp Rainbow
 augroup rainbow_lisp
   autocmd!
-  autocmd FileType lisp,clojure,scheme RainbowParentheses
+  autocmd FileType lisp,clojure,scheme,php,javascript,crystal,go RainbowParentheses
 augroup END
 
 " Go
@@ -232,7 +225,59 @@ let g:go_fmt_options = {
     \ 'golines': '-m 128',
     \ }
 
-"TAB and S-TAB bindings
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+"TAB and S-TAB bindings for tabnine
+" inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 " inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+" COC
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+let g:coc_global_extensions = ['coc-json']
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion.
+if has('nvim')
+  inoremap <silent><expr> <c-space> coc#refresh()
+else
+  inoremap <silent><expr> <c-@> coc#refresh()
+endif
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
+" go to next error
+nmap <Leader>n <Plug>(coc-diagnostic-next)
+" go to previous error
+nmap <Leader>p <Plug>(coc-diagnostic-prev)
+
+" Highlight the symbol and its references when holding the cursor.
+" autocmd CursorHold * silent call CocActionAsync('highlight')
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . " " . expand('<cword>')
+  endif
+endfunction
+" END COC
