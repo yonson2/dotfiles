@@ -76,11 +76,11 @@ local exit_screen_theme = exit_screen_themes[2]
 user = {
     -- >> Default applications <<
     -- Check apps.lua for more
-    terminal = "alacritty",
-    floating_terminal = "alacritty",
+    terminal = "kitty",
+    floating_terminal = "kitty",
     browser = "firefox",
     file_manager = "nautilus",
-    editor = "alacritty -e nvim",
+    editor = "kitty -e nvim",
     email_client = "thunderbird",
     music_client = "spotify",
 
