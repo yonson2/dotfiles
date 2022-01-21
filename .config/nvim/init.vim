@@ -62,6 +62,7 @@ endif
 syntax enable
 set background=dark
 colorscheme palenight
+highlight Comment cterm=italic
 let g:palenight_terminal_italics=1
 " call one#highlight('Normal', 'abb2bf', '0f131b', 'none') " change bg color
 
