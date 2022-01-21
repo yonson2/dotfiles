@@ -11,8 +11,6 @@ let g:polyglot_disabled = ['go', 'crystal']
 call plug#begin('~/.config/nvim/plugged')
 " Plug 'rakr/vim-one' " Atom theme, dark and light variant
 Plug 'drewtempelmeyer/palenight.vim'
-" Plug 'ctrlpvim/ctrlp.vim' " Fuzzy finder.
-" Plug 'vim-airline/vim-airline' " Status bar
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'akinsho/bufferline.nvim'
 " If you want to have icons in your statusline.
@@ -33,8 +31,6 @@ Plug 'kovisoft/paredit' " Common Lisp parenthesis help
 Plug 'Yggdroot/indentLine' " displays thin vertical lines at each indentation level
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " Better syntax highlightning
 Plug 'neoclide/coc.nvim', {'branch': 'release'} " Conquer of Completion
-" Plug 'sheerun/vim-polyglot' " Syntax highlightning for multiple languages
-" Plug 'w0rp/ale' " Linting
 " Plug 'zxqfl/tabnine-vim' " the all-language auto-completer
 if executable('go')
   Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' } " Better support fo Go files
@@ -87,10 +83,6 @@ set showbreak=↪         " Display character indicating new line
 set wildmenu            " visual autocomplete for command menu
 set colorcolumn=120     " vertical indicator
 set updatetime=2000      " Time Vim waits after you stop typing before it triggers stuff. Default=4000
-
-" Make CtrlP fast https://github.com/kien/ctrlp.vim/issues/174
-set wildignore+=*/.git/*,*/tmp/*,*.swp
-" let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
 
 " Map the leader key to SPACE
 let mapleader="\<SPACE>"
@@ -162,20 +154,11 @@ set gdefault            " Use 'g' flag by default with :s/foo/bar/.
 nmap n nzz
 nmap N Nzz
 
-" ag.nvim config
-let g:ag_working_path_mode="r" " Start searching from project root.
-
-" Statusline
-" set statusline=%f\ \ %y%m%r%h%w%=[%l,%v]\ \ \ \ \ \ [%L,%p%%]\ %n
-
 " javascript
 let g:neomake_javascript_enabled_makers = ['eslint']
 let g:neomake_jsx_enabled_makers = ['eslint']
 let g:neomake_javascript_eslint_exe = system('PATH=$(npm bin):$PATH && which eslint | tr -d "\n"') "Prefer local eslint
 let g:javascript_plugin_jsdoc = 1
-
-" " Rust
-" let g:rustfmt_autosave = 1
 
 " nim
 " fix for commentary
