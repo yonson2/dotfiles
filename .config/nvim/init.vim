@@ -9,12 +9,21 @@ endif
 let g:polyglot_disabled = ['go', 'crystal']
 
 call plug#begin('~/.config/nvim/plugged')
-Plug 'rakr/vim-one' " Atom theme, dark and light variant
-Plug 'ctrlpvim/ctrlp.vim' " Fuzzy finder.
-Plug 'vim-airline/vim-airline' " Status bar
-Plug 'sheerun/vim-polyglot' " Syntax highlightning for multiple languages
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim' "Fzf, the fuzzy finder
+" Plug 'rakr/vim-one' " Atom theme, dark and light variant
+Plug 'drewtempelmeyer/palenight.vim'
+" Plug 'ctrlpvim/ctrlp.vim' " Fuzzy finder.
+" Plug 'vim-airline/vim-airline' " Status bar
+Plug 'nvim-lualine/lualine.nvim'
+Plug 'akinsho/bufferline.nvim'
+" If you want to have icons in your statusline.
+Plug 'kyazdani42/nvim-web-devicons'
+" Fuzzy finder
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+" File tree
+" After install run :CHADdeps
+Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': 'python3 -m chadtree deps'}
 Plug 'jiangmiao/auto-pairs' " Inserts matching pairs, probably only useful for coding
 Plug 'tpope/vim-commentary' " add/remove comments, gcc for line, gc<motion>
 Plug 'tpope/vim-surround' " quoting/parenthesizing made simple
@@ -22,8 +31,9 @@ Plug 'tpope/vim-repeat' " Enable . repeat for things like vim-surround
 Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'kovisoft/paredit' " Common Lisp parenthesis help
 Plug 'Yggdroot/indentLine' " displays thin vertical lines at each indentation level
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " Better syntax highlightning
 Plug 'neoclide/coc.nvim', {'branch': 'release'} " Conquer of Completion
-" Plug 'elixir-lsp/coc-elixir', {'do': 'yarn install && yarn prepack'} " Elixir lsp
+" Plug 'sheerun/vim-polyglot' " Syntax highlightning for multiple languages
 " Plug 'w0rp/ale' " Linting
 " Plug 'zxqfl/tabnine-vim' " the all-language auto-completer
 if executable('go')
@@ -35,6 +45,9 @@ endif
 if executable('crystal')
   Plug 'jlcrochet/vim-crystal'
 endif
+if executable('iex')
+  Plug 'elixir-lsp/coc-elixir', {'do': 'yarn install && yarn prepack'} " Elixir lsp
+endif
 call plug#end()
 
 " Set shell to bash
@@ -42,19 +55,18 @@ set shell=/bin/zsh
 
 " Or if you have Neovim >= 0.1.5
 if (has("termguicolors"))
+  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
   set termguicolors
 endif
 
-" 256 color support
-set t_Co=256
-set termguicolors
-" set t_AB=^[[48;5;%dm
-" set t_AF=^[[38;5;%dm
+" " 256 color support
+" set t_Co=256
 
 " Theme
 syntax enable
 set background=dark
-colorscheme one
+colorscheme palenight
+let g:palenight_terminal_italics=1
 " call one#highlight('Normal', 'abb2bf', '0f131b', 'none') " change bg color
 
 set showcmd             " Show (partial) command in status line.
@@ -85,11 +97,13 @@ let mapleader="\<SPACE>"
 
 " Leader mappings
 " Open file menu
-nnoremap <Leader>o :Files<CR>
+nnoremap <Leader>o <cmd>Telescope find_files prompt_prefix=🔍<cr>
+" Open file tree
+nnoremap <Leader>q <cmd>CHADopen<cr>
 " Open buffer menu
-nnoremap <Leader>b :Buffers<CR>
+nnoremap <Leader>b <cmd>Telescope buffers<cr>
 " Open most recently used files
-nnoremap <Leader>f :CtrlPMRUFiles<CR>
+nnoremap <Leader>f <cmd>Telescope live_grep<CR>
 " Save current buffers and settings to ~/today.ses // restore with vim -S ~/today.ses
 nnoremap <Leader>s :mksession! ~/.vim_session<CR>
 " Restore session
@@ -109,9 +123,6 @@ nnoremap <Leader><Leader> :ll<CR>
 " nnoremap <Leader>p :lprev<CR>
 " Toggle highlights
 nnoremap <Leader>t :noh<CR>
-" Map <Esc> to exit terminal mode, while working well with fzf
-au TermOpen * tnoremap <buffer> <Esc> <c-\><c-n>
-au FileType fzf tunmap <buffer> <Esc>
 " Select contents of a whole file
 nnoremap <Leader>a ggVG
 " Move lines around easily
@@ -156,36 +167,6 @@ let g:ag_working_path_mode="r" " Start searching from project root.
 
 " Statusline
 " set statusline=%f\ \ %y%m%r%h%w%=[%l,%v]\ \ \ \ \ \ [%L,%p%%]\ %n
-" " Airline
-if !exists('g:airline_symbols')
-  let g:airline_symbols = {}
-endif
-
-let g:airline#extensions#tabline#enabled = 2
-let g:airline#extensions#tabline#fnamemod = ':t'
-let g:airline#extensions#tabline#left_sep = ' '
-let g:airline#extensions#tabline#left_alt_sep = '|'
-let g:airline#extensions#tabline#right_sep = ' '
-let g:airline#extensions#tabline#right_alt_sep = '|'
-
-" unicode symbols
-let g:airline_symbols.crypt = '🔒'
-let g:airline_symbols.maxlinenr = ''
-let g:airline_symbols.paste = '∥'
-let g:airline_symbols.spell = 'Ꞩ'
-let g:airline_symbols.notexists = '∄'
-let g:airline_symbols.whitespace = 'Ξ'
-
-" powerline symbols
-let g:airline_left_sep = ''
-let g:airline_left_alt_sep = ''
-let g:airline_right_sep = ''
-let g:airline_right_alt_sep = ''
-let g:airline_symbols.branch = ''
-let g:airline_symbols.readonly = ''
-let g:airline_symbols.linenr = ''
-
-let g:airline_powerline_fonts = 1 " Use powerline fonts
 
 " javascript
 let g:neomake_javascript_enabled_makers = ['eslint']
@@ -209,7 +190,7 @@ augroup END
 " Go
 " fmt buffer when saving
 let g:go_fmt_autosave = 1
-let g:go_fmt_command = "goimports"
+" let g:go_fmt_command = "goimports"
 let g:go_addtags_transform = "camelcase"
 "" The following commands impact performance, disable if vim becomes slow:
 let g:go_highlight_types = 1
@@ -224,6 +205,9 @@ let g:go_fmt_command = "golines"
 let g:go_fmt_options = {
     \ 'golines': '-m 128',
     \ }
+
+" Elixir
+" autocmd FileType elixir setlocal formatprg=mix\ format\ - " (Coc provides this)
 
 "TAB and S-TAB bindings for tabnine
 " inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
@@ -281,3 +265,47 @@ function! s:show_documentation()
   endif
 endfunction
 " END COC
+
+" Lualine, treesitter, bufferline
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  -- One of "all", "maintained" (parsers with maintainers), or a list of languages
+  ensure_installed = "maintained",
+  -- Install languages synchronously (only applied to `ensure_installed`)
+  sync_install = false,
+  -- List of parsers to ignore installing
+  ignore_install = {},
+  highlight = {
+    -- `false` will disable the whole extension
+    enable = true,
+    -- list of language that will be disabled
+    disable = {},
+    -- additional_vim_regex_highlighting = {"elixir"},
+    additional_vim_regex_highlighting = false,
+  },
+}
+
+require('bufferline').setup{
+options = {
+  show_close_icon = false,
+  show_buffer_close_icons = false,
+  }
+}
+
+require('lualine').setup{
+  options = { theme  = 'palenight' },
+}
+
+require('telescope').setup{
+  defaults = {
+    mappings = {
+      i = {
+        ["<C-j>"] = "move_selection_next",
+        ["<C-k>"] = "move_selection_previous",
+        ["<esc>"] = "close",
+      }
+    },
+  },
+}
+require('telescope').load_extension('fzf')
+EOF

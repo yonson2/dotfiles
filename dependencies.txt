@@ -1,4 +1,4 @@
-yay -S awesome-git rofi lm_sensors acpid jq fortune-mod redshift mpd mpc maim feh light-git pulseaudio inotify-tools xdotool gvim redshift zsh picom-git ripgrep thunderbird dropbox alacritty playerctl xbindkeys yarn
+yay -S awesome-git rofi lm_sensors acpid jq fortune-mod redshift mpd mpc maim feh light-git pulseaudio inotify-tools xdotool gvim redshift zsh picom-git ripgrep thunderbird dropbox alacritty playerctl xbindkeys yarn fd
 
 check .xprofile for keyboard settings
 
