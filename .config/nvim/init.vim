@@ -9,8 +9,7 @@ endif
 let g:polyglot_disabled = ['go', 'crystal']
 
 call plug#begin('~/.config/nvim/plugged')
-" Plug 'rakr/vim-one' " Atom theme, dark and light variant
-Plug 'drewtempelmeyer/palenight.vim'
+Plug 'catppuccin/nvim', {'as': 'catppuccin'}
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'akinsho/bufferline.nvim'
 " If you want to have icons in your statusline.
@@ -43,15 +42,6 @@ if executable('go')
     silent !go install golang.org/x/tools/cmd/goimports@latest
   endif
 endif
-" if executable('crystal')
-"   Plug 'jlcrochet/vim-crystal'
-" endif
-" if executable('iex')
-"   " coc-elixir is using an outdated version of elixir-ls, make sure to
-"   " download the latest elixir-ls from https://github.com/elixir-lsp/elixir-ls/releases/
-"   " and unzip elixir-ls.zip -d ~/.vim/plugged/coc-elixir/els-release
-"   Plug 'elixir-lsp/coc-elixir', {'do': 'yarn install && yarn prepack'} " Elixir lsp
-" endif
 call plug#end()
 
 " Set shell to bash
@@ -69,10 +59,12 @@ endif
 " Theme
 syntax enable
 set background=dark
-colorscheme palenight
 highlight Comment cterm=italic
-let g:palenight_terminal_italics=1
-" call one#highlight('Normal', 'abb2bf', '0f131b', 'none') " change bg color
+let g:catppuccin_flavour = "macchiato" " latte, frappe, macchiato, mocha
+lua << EOF
+require("catppuccin").setup()
+EOF
+colorscheme catppuccin
 
 syntax on               " Enable syntax highlightning
 set showcmd             " Show (partial) command in status line.
@@ -208,14 +200,6 @@ let g:go_highlight_build_constraints = 1
 "     \ 'golines': '-m 128',
 "     \ }
 
-" Elixir
-" autocmd FileType elixir setlocal formatprg=mix\ format\ - " (Coc provides this)
-
-"TAB and S-TAB bindings for tabnine
-" inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-" inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-
 " COC
 " Use <tab> and <S-tab> to navigate completion list: >
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
@@ -285,7 +269,7 @@ options = {
 }
 
 require('lualine').setup{
-  options = { theme  = 'palenight' },
+  options = { theme  = 'catppuccin' },
 }
 
 require('telescope').setup{
