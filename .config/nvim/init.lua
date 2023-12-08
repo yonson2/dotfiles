@@ -153,8 +153,8 @@ vim.o.cursorcolumn = true
 
 -- Set colorscheme
 require("catppuccin").setup({
-  flavour = "macchiato", -- latte, frappe, macchiato, mocha
-  background = {         -- :h background
+  flavour = "mocha", -- latte, frappe, macchiato, mocha
+  background = {     -- :h background
     light = "latte",
     dark = "mocha",
   },
@@ -189,7 +189,7 @@ require("catppuccin").setup({
   },
 })
 vim.o.termguicolors = true
-vim.cmd [[colorscheme catppuccin-macchiato]]
+vim.cmd [[colorscheme catppuccin]]
 
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
@@ -235,7 +235,8 @@ vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = tr
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
 -- Remap gx (currently broken)
-vim.keymap.set({ 'n' }, 'gx', '<Cmd>call jobstart(["open", expand("<cfile>")], {"detach": v:true})<CR>', { desc = 'Open link in the browser' })
+vim.keymap.set({ 'n' }, 'gx', '<Cmd>call jobstart(["open", expand("<cfile>")], {"detach": v:true})<CR>',
+  { desc = 'Open link in the browser' })
 -- nmap <silent> gx :!open <cWORD><cr>
 
 -- [[ Highlight on yank ]]
