@@ -24,7 +24,7 @@ require('packer').startup(function(use)
       'folke/neodev.nvim',
     },
   }
-  use { 'github/copilot.vim' }                -- copilot
+  -- use { 'github/copilot.vim' }                -- copilot
   -- Useful status updates for LSP
   use { 'j-hui/fidget.nvim', tag = 'legacy' } -- Check from time to time if non-legacy can be used
 
@@ -57,6 +57,7 @@ require('packer').startup(function(use)
   use 'numToStr/Comment.nvim'                                                               -- "gc" to comment visual regions/lines
   use 'tpope/vim-sleuth'                                                                    -- Detect tabstop and shiftwidth automatically
   use 'tpope/vim-surround'                                                                  -- quoting/parenthesizing made simple
+  use 'tpope/vim-repeat'                                                                    -- repeat plugins (like surround) with .
   use 'jiangmiao/auto-pairs'                                                                -- Inserts matching pairs, probably only useful for coding
 
   -- Fuzzy Finder (files, lsp, etc)
@@ -114,7 +115,7 @@ vim.api.nvim_create_autocmd('BufWritePost', {
 -- See `:help vim.o`
 
 -- Set highlight on search
-vim.o.hlsearch = false
+vim.o.hlsearch = true
 
 -- set tab width to 2 instead of 8
 vim.opt.tabstop = 2
@@ -127,6 +128,8 @@ vim.opt.list = true
 
 -- Make line numbers default
 vim.wo.number = true
+-- Relative line numbers
+vim.wo.relativenumber = true
 
 -- Enable mouse mode
 vim.o.mouse = 'a'
@@ -144,8 +147,47 @@ vim.o.smartcase = true
 -- Decrease update time
 vim.o.updatetime = 250
 vim.wo.signcolumn = 'yes'
+-- Grid
+vim.o.cursorline = true
+vim.o.cursorcolumn = true
 
 -- Set colorscheme
+require("catppuccin").setup({
+  flavour = "macchiato", -- latte, frappe, macchiato, mocha
+  background = {         -- :h background
+    light = "latte",
+    dark = "mocha",
+  },
+  styles = {                 -- Handles the styles of general hi groups (see `:h highlight-args`):
+    comments = { "italic" }, -- Change the style of comments
+    conditionals = { "italic" },
+    loops = {},
+    functions = {},
+    keywords = {},
+    strings = {},
+    variables = {},
+    numbers = {},
+    booleans = {},
+    properties = {},
+    types = {},
+    operators = {},
+  },
+  color_overrides = {},
+  custom_highlights = {},
+  integrations = {
+    cmp = true,
+    nvimtree = true,
+    treesitter = true,
+    mason = true,
+    fidget = true,
+    indent_blankline = {
+      enabled = true,
+      scope_color = "blue", -- catppuccin color (eg. `lavender`) Default: text
+      colored_indent_levels = true,
+    },
+    -- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
+  },
+})
 vim.o.termguicolors = true
 vim.cmd [[colorscheme catppuccin-macchiato]]
 
@@ -227,10 +269,7 @@ require('Comment').setup()
 
 -- Enable `lukas-reineke/indent-blankline.nvim`
 -- See `:help indent_blankline.txt`
-require('indent_blankline').setup {
-  char = '┊',
-  show_trailing_blankline_indent = false,
-}
+require("ibl").setup()
 
 -- Gitsigns
 -- See `:help gitsigns.txt`
@@ -275,6 +314,7 @@ vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, { des
 vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
 vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
 vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
+vim.keymap.set('n', '<leader>sq', require('telescope.builtin').quickfix, { desc = '[S]earch [Q]uickfix Files' })
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
@@ -285,7 +325,7 @@ vim.keymap.set('n', '<leader>f', vim.diagnostic.open_float)
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'go', 'lua', 'rust', 'typescript', 'help' },
+  ensure_installed = { 'go', 'lua', 'rust', 'help' },
 
   highlight = { enable = true },
   indent = { enable = true, disable = { 'python' } },
@@ -463,7 +503,14 @@ null_ls.setup({
 })
 
 -- Turn on lsp status information
-require('fidget').setup()
+-- the custom setup is from catppuccin readme.
+require("fidget").setup {
+  notification = {
+    window = {
+      winblend = 0,
+    },
+  }
+}
 
 -- nvim-cmp setup
 local cmp = require 'cmp'

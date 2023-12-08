@@ -59,5 +59,6 @@ yabai -m space 9 --label nine
 
 #rules
 yabai -m rule --add label=firefoxOnTwo app="^Firefox$" space=two
+yabai -m rule --add label=nightlyOnThree app="^Firefox Nightly$" space=three
 
 echo "yabai configuration loaded.."

@@ -84,15 +84,19 @@ cmd - return : /opt/homebrew/bin/kitty --directory ~
 
 # focus window
 cmd - h : yabai -m window --focus west
+cmd - left : yabai -m window --focus west
 cmd - l : yabai -m window --focus east
+cmd - right : yabai -m window --focus east
 cmd - j : yabai -m window --focus south
+cmd - down : yabai -m window --focus south
 cmd - k : yabai -m window --focus north
+cmd - up : yabai -m window --focus north
 
 # swap managed window
-shift + alt - h : yabai -m window --swap west
-shift + alt - l : yabai -m window --swap east
-shift + alt - j : yabai -m window --swap south
-shift + alt - k : yabai -m window --swap north
+shift + cmd - h : yabai -m window --swap west
+shift + cmd - l : yabai -m window --swap east
+shift + cmd - j : yabai -m window --swap south
+shift + cmd - k : yabai -m window --swap north
 
 ## toggle window fullscreen zoom
 shift + cmd - f : yabai -m window --toggle zoom-fullscreen
@@ -107,6 +111,7 @@ shift + alt - 0 : yabai -m space --balance
 cmd + alt - x : yabai -m space --focus last
 cmd + alt - z : yabai -m space --focus prev
 cmd + alt - c : yabai -m space --focus next
+# consider switching to focus_follows_mouse to avoid the &&
 cmd - 1 : yabai -m space --focus 1
 cmd - 2 : yabai -m space --focus 2
 cmd - 3 : yabai -m space --focus 3
