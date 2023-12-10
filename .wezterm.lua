@@ -14,9 +14,79 @@ end
 config.color_scheme = 'catppuccin-mocha'
 config.enable_scroll_bar = true
 config.scrollback_lines = 20000
-config.font_size = 13.0
+config.font_size = 13.3
 config.warn_about_missing_glyphs = true
 config.hide_tab_bar_if_only_one_tab = true
+
+config.keys = {
+  -- Turn off the default CMD-m Hide action, allowing CMD-m to
+  -- be potentially recognized and handled by the tab
+  {
+    key = '3',
+    mods = 'OPT',
+    action = wezterm.action { SendString = "#" },
+  },
+  {
+    key = '2',
+    mods = 'OPT',
+    action = wezterm.action { SendString = "€" },
+  },
+  {
+    key = 'a',
+    mods = 'OPT',
+    action = wezterm.action { SendString = "á" },
+  },
+  {
+    key = 'A',
+    mods = 'OPT',
+    action = wezterm.action { SendString = "Á" },
+  },
+  {
+    key = 'e',
+    mods = 'OPT',
+    action = wezterm.action { SendString = "é" },
+  },
+  {
+    key = 'E',
+    mods = 'OPT',
+    action = wezterm.action { SendString = "É" },
+  },
+  {
+    key = 'i',
+    mods = 'OPT',
+    action = wezterm.action { SendString = "í" },
+  },
+  {
+    key = '(',
+    mods = 'OPT',
+    action = wezterm.action { SendString = "Í" },
+  },
+  {
+    key = 'o',
+    mods = 'OPT',
+    action = wezterm.action { SendString = "ó" },
+  },
+  {
+    key = 'O',
+    mods = 'OPT',
+    action = wezterm.action { SendString = "Ó" },
+  },
+  {
+    key = 'u',
+    mods = 'OPT',
+    action = wezterm.action { SendString = "ú" },
+  },
+  {
+    key = 'U',
+    mods = 'OPT',
+    action = wezterm.action { SendString = "Ú" },
+  },
+  {
+    key = 'n',
+    mods = 'OPT',
+    action = wezterm.action { SendString = "ñ" },
+  },
+}
 
 --Font config
 config.font = wezterm.font(
